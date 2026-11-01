@@ -1,0 +1,77 @@
+/* GA-INSIGHT Custom CSS & Print Media Styles */
+
+/* A4 인쇄 스타일 최적화 (Ctrl+P 시 완벽한 제안서 출력) */
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt;
+    }
+
+    header, footer, .print\:hidden, nav, button {
+        display: none !important;
+    }
+
+    #print-modal {
+        position: static !important;
+        display: block !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+
+    #print-modal > div {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .printable-doc {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 15mm 15mm 15mm 15mm;
+    }
+}
+
+/* 스크롤바 커스텀 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.nav-btn.active {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+
+/* 가로 탭 바 스크롤바 숨김 (글씨 가로 정렬 시 시각적 일체감) */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
