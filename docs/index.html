@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA-INSIGHT | 손해보험 법인대리점 통합설계 & 보장분석 솔루션</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="./static/css/custom.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#0284C7',
+                        accent: '#DC2626',
+                        branddark: '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+    <!-- 글로벌 2단 내비게이션 바 (가로 정렬 100% 보장 및 시인성 극대화) -->
+    <header class="bg-slate-950 text-white sticky top-0 z-50 shadow-md print:hidden border-b border-slate-800">
+        <!-- 1단: 브랜드 로고 & 설계사 프로필 & 공유 버튼 -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap justify-between items-center gap-3">
+            <!-- 좌측: 브랜드 & 대리점 -->
+            <div class="flex items-center space-x-3 cursor-pointer select-none" onclick="switchTab('tab-dashboard')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center font-black text-xl tracking-wider text-white shadow-md">
+                    GA
+                </div>
+                <div>
+                    <div class="font-extrabold text-base tracking-tight flex items-center gap-2">
+                        <span class="text-white">GA-INSIGHT</span>
+                        <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-900/80 text-blue-200 border border-blue-700">손보 8개사 통합설계</span>
+                    </div>
+                    <div class="text-[11px] text-slate-400 font-medium" id="header-agency-name">인슈탑 법인보험대리점(GA)</div>
+                </div>
+            </div>
+
+            <!-- 우측: 링크 공유 & 엔진 상태 & 설계사 정보 -->
+            <div class="flex items-center space-x-2 sm:space-x-3 text-xs">
+                <button onclick="copyShareLink()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-900 flex items-center gap-1.5 shadow-sm transition transform active:scale-95 cursor-pointer whitespace-nowrap" title="누구나 접속할 수 있는 공유 링크 복사">
+                    <i class="fa-solid fa-share-nodes text-slate-900"></i>
+                    <span>링크 복사 (공유)</span>
+                </button>
+                <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800 whitespace-nowrap">
+                    <span class="w-2 h-2 mr-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                    8대 손보사 엔진 가동 중
+                </span>
+                <div class="text-right text-xs pl-2 border-l border-slate-800 hidden sm:block whitespace-nowrap">
+                    <div class="font-bold text-slate-200" id="header-agent-name">수석설계사</div>
+                    <div class="text-[11px] text-slate-400" id="header-agent-contact">010-1234-5678</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2단: 전용 메뉴 탭 바 (글씨 꺾임 방지, 가로 1줄 정렬, 시인성 최적화) -->
+        <div class="bg-slate-900 border-t border-slate-800/80">
+            <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between gap-2 overflow-x-auto text-xs font-medium no-scrollbar">
+                <!-- 핵심 업무 탭 7개 -->
+                <nav class="flex items-center space-x-1 whitespace-nowrap">
+                    <button onclick="switchTab('tab-dashboard')" id="nav-tab-dashboard" class="nav-btn px-2.5 py-1.5 rounded-lg font-semibold hover:bg-slate-800 text-white flex items-center gap-1.5 transition whitespace-nowrap">
+                        <i class="fa-solid fa-chart-pie text-blue-400"></i>
+                        <span>대시보드</span>
+                    </button>
+                    <button onclick="switchTab('tab-customers')" id="nav-tab-customers" class="nav-btn px-2.5 py-1.5 rounded-lg font-semibold hover:bg-slate-800 text-slate-300 flex items-center gap-1.5 transition whitespace-nowrap">
+                        <i class="fa-solid fa-users text-emerald-400"></i>
+                        <span>고객 관리</span>
+                    </button>
+                    <button onclick="switchTab('tab-diagnose')" id="nav-tab-diagnose" class="nav-btn px-2.5 py-1.5 rounded-lg font-semibold hover:bg-slate-800 text-slate-300 flex items-center gap-1.5 transition whitespace-nowrap">
+                        <i class="fa-solid fa-stethoscope text-amber-400"></i>
+                        <span>보장 분석</span>
+                    </button>
+                    <button onclick="switchTab('tab-calculate')" id="nav-tab-calculate" class="nav-btn px-2.5 py-1.5 rounded-lg font-semibold hover:bg-slate-800 text-rose-300 flex items-center gap-1.5 transition whitespace-nowrap bg-rose-950/40 border border-rose-800/60">
+                        <i class="fa-solid fa-bolt text-rose-400"></i>
+                        <span>8대 손보사 비교설계</span>
+                    </button>
+                    <button onclick="switchTab('tab-caregiver')" id="nav-tab-caregiver" class="nav-btn px-2.5 py-1.5 rounded-lg font-semibold hover:bg-slate-800 text-teal-300 flex items-center gap-1.5 transition whitespace-nowrap bg-teal-950/40 border border-teal-800/60">
+                        <i class="fa-solid fa-hand-holding-heart text-teal-400"></i>
+                        <span>간병보험 비교설계</span>
+                    </button>
+                    <button onclick="switchTab('tab-rpa')" id="nav-tab-rpa" class="nav-btn px-2.5 py-1.5 rounded-lg font-semibold hover:bg-slate-800 text-slate-300 flex items-center gap-1.5 transition whitespace-nowrap">
+                        <i class="fa-solid fa-robot text-purple-400"></i>
+                        <span>원수사 전산 RPA</span>
+                    </button>
+                    <button onclick="switchTab('tab-settings')" id="nav-tab-settings" class="nav-btn px-2.5 py-1.5 rounded-lg font-semibold hover:bg-slate-800 text-slate-300 flex items-center gap-1.5 transition whitespace-nowrap">
+                        <i class="fa-solid fa-gear text-slate-400"></i>
+                        <span>대리점 설정</span>
+                    </button>
+                </nav>
+
+                <!-- 구분선 및 외부 특화 리포트/홈페이지 바로가기 3개 -->
+                <div class="flex items-center space-x-1.5 pl-2 border-l border-slate-800 whitespace-nowrap">
+                    <a href="./youtube_analysis.html" target="_blank" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-950 hover:bg-rose-900 text-rose-200 flex items-center gap-1.5 transition border border-rose-700 whitespace-nowrap">
+                        <i class="fa-brands fa-youtube text-red-500"></i>
+                        <span>유튜브 20편 분석</span>
+                    </a>
+                    <a href="./youtube_ppt.html" target="_blank" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-950 hover:bg-indigo-900 text-indigo-200 flex items-center gap-1.5 transition border border-indigo-700 animate-pulse whitespace-nowrap">
+                        <i class="fa-solid fa-file-powerpoint text-indigo-400"></i>
+                        <span>HTML PPT 발표</span>
+                    </a>
+                    <a href="./home.html" target="_blank" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-950 hover:bg-blue-900 text-amber-300 flex items-center gap-1.5 transition border border-blue-700 whitespace-nowrap">
+                        <i class="fa-solid fa-house text-amber-400"></i>
+                        <span>대리점 소개</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- TAB 1: 대시보드 -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            <!-- 웰컴 배너 -->
+            <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block px-3 py-1 bg-blue-600/50 backdrop-blur border border-blue-400/30 rounded-full text-xs font-semibold tracking-wide text-blue-200 mb-3">
+                        GA CORPORATE SOLUTION
+                    </span>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">
+                        손해보험 전 보험사 실시간 비교설계 플랫폼
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+                        메리츠, 삼성, DB, 현대, KB 등 8대 주요 손보사의 보장과 보험료를 한 번에 비교하고, 고객 맞춤 제안서와 원수사 전산 자동입력(RPA)까지 원클릭으로 완료하세요.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="switchTab('tab-calculate')" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 font-semibold rounded-lg text-sm shadow transition flex items-center gap-2">
+                            <i class="fa-solid fa-bolt"></i> 8개사 즉시 비교설계
+                        </button>
+                        <button onclick="switchTab('tab-diagnose')" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-semibold rounded-lg text-sm transition flex items-center gap-2">
+                            <i class="fa-solid fa-stethoscope"></i> 원클릭 보장분석
+                        </button>
+                        <button onclick="openCustomerModal()" class="px-5 py-2.5 bg-blue-700 hover:bg-blue-600 font-semibold rounded-lg text-sm transition flex items-center gap-2">
+                            <i class="fa-solid fa-user-plus"></i> 신규 고객 등록
+                        </button>
+                    </div>
+                </div>
+                <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none transform translate-x-10 translate-y-10">
+                    <i class="fa-solid fa-shield-halved text-9xl"></i>
+                </div>
+            </div>
+
+            <!-- 핵심 지표 카드 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-medium text-slate-500">등록 고객 수</div>
+                        <div class="text-2xl font-bold text-slate-900 mt-1" id="dash-cust-count">0명</div>
+                        <div class="text-xs text-blue-600 mt-1">가망 및 관리 고객</div>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-medium text-slate-500">지원 손해보험사</div>
+                        <div class="text-2xl font-bold text-slate-900 mt-1">8개사 전산</div>
+                        <div class="text-xs text-emerald-600 mt-1">실시간 요율 연동</div>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-medium text-slate-500">생성된 비교설계안</div>
+                        <div class="text-2xl font-bold text-slate-900 mt-1" id="dash-prop-count">0건</div>
+                        <div class="text-xs text-purple-600 mt-1">상담 및 제안 진행</div>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-medium text-slate-500">GA 평균 시책/수수료</div>
+                        <div class="text-2xl font-bold text-rose-600 mt-1">1,150%</div>
+                        <div class="text-xs text-slate-500 mt-1">원수사 최고 우대 반영</div>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-percent"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8대 손해보험사 현황 그리드 -->
+            <div>
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-blue-600"></i> 제휴 8대 손해보험사 전산 포털 & 특화 영역
+                    </h2>
+                    <span class="text-xs text-slate-500">카드를 클릭하면 각 사 포털로 바로 이동합니다.</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="insurers-grid">
+                    <!-- JS로 8개 보험사 카드 동적 로드 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: 고객 관리 (CRM) -->
+        <section id="tab-customers" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">고객 데이터베이스 관리 (CRM)</h2>
+                        <p class="text-sm text-slate-500">가망 고객의 인적사항, 직업급수 및 병력 고지 유형을 관리하고 즉시 설계로 연계합니다.</p>
+                    </div>
+                    <button onclick="openCustomerModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow transition flex items-center gap-2">
+                        <i class="fa-solid fa-user-plus"></i> 신규 고객 등록
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 bg-slate-50 text-xs font-semibold text-slate-600 uppercase">
+                                <th class="p-3">고객명</th>
+                                <th class="p-3">나이/성별</th>
+                                <th class="p-3">생년월일</th>
+                                <th class="p-3">직업/급수</th>
+                                <th class="p-3">심사 유형</th>
+                                <th class="p-3">연락처</th>
+                                <th class="p-3 text-right">설계 및 진단 액션</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-table-body" class="divide-y divide-slate-100 text-sm">
+                            <!-- JS 동적 로드 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: 원클릭 보장 분석 진단 -->
+        <section id="tab-diagnose" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- 입력 패널 (좌측) -->
+                <div class="lg:col-span-5 bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                    <div class="border-b border-slate-100 pb-3">
+                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-clipboard-check text-amber-500"></i> 고객 기존 보험 가입내역 입력
+                        </h2>
+                        <p class="text-xs text-slate-500">고객이 현재 가입 중인 담보별 보장금액을 입력하세요.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-700 mb-1">대상 고객 선택</label>
+                            <select id="diag-cust-select" onchange="onDiagCustomerChange()" class="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                <option value="">-- 직접 입력 --</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-700 mb-1">연령 / 성별</label>
+                            <div class="flex gap-2">
+                                <input type="number" id="diag-age" value="40" min="0" max="90" class="w-1/2 text-sm border border-slate-300 rounded-lg p-2">
+                                <select id="diag-gender" class="w-1/2 text-sm border border-slate-300 rounded-lg p-2">
+                                    <option value="M">남성</option>
+                                    <option value="F">여성</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 담보별 기존 가입금액 입력 폼 -->
+                    <div class="space-y-3 pt-2 max-h-[460px] overflow-y-auto pr-1" id="diag-inputs-container">
+                        <!-- JS로 8개 담보 입력칸 생성 -->
+                    </div>
+
+                    <button onclick="runDiagnosis()" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> 1초 보장 분석 & 점수 진단
+                    </button>
+                </div>
+
+                <!-- 진단 결과 패널 (우측) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-radar text-blue-600"></i> 종합 보장 진단 리포트
+                            </h3>
+                            <span id="diag-score-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600">
+                                분석 대기 중
+                            </span>
+                        </div>
+
+                        <!-- 레이더 차트 및 스코어 요약 -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                            <div class="md:col-span-5 flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl">
+                                <div class="text-xs text-slate-500 font-semibold mb-1">보장 충족도 종합 점수</div>
+                                <div class="text-5xl font-black text-blue-600" id="diag-score-val">--</div>
+                                <div class="text-xs text-slate-400 mt-1">100점 만점 기준</div>
+                                <div class="w-full mt-4 text-xs p-3 bg-white rounded border border-slate-200 text-slate-600" id="diag-summary-text">
+                                    좌측에서 고객의 가입 내역을 입력 후 진단 버튼을 눌러주세요.
+                                </div>
+                            </div>
+                            <div class="md:col-span-7 h-64 flex items-center justify-center">
+                                <canvas id="radarChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 리모델링 액션 가이드 -->
+                        <div class="mt-6 pt-4 border-t border-slate-100">
+                            <div class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-1.5">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i> 핵심 보장 공백(Gap) 및 리모델링 전략
+                            </div>
+                            <ul id="diag-actions-list" class="space-y-2 text-xs text-slate-700">
+                                <li class="text-slate-400">분석을 실행하면 맞춤형 조언이 표시됩니다.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 바로 설계 연계 버튼 -->
+                        <div class="mt-6">
+                            <button onclick="applyDeficitToCalculator()" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-bold shadow transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-arrow-right"></i> 부족한 담보로 8개 손보사 비교설계 즉시 시작
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: 8대 손보사 실시간 비교설계 (Core Engine) -->
+        <section id="tab-calculate" class="tab-content hidden space-y-6">
+            <!-- 설계 조건 설정 바 -->
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-rose-600"></i> 8대 손해보험사 실시간 비교설계 엔진
+                        </h2>
+                        <p class="text-xs text-slate-500">담보 금액을 변경하면 메리츠, 삼성, DB, 현대, KB 등 8개사의 보험료가 실시간 비교 산출됩니다.</p>
+                    </div>
+
+                    <!-- 고객 바로 불러오기 -->
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs font-semibold text-slate-600 whitespace-nowrap">고객 불러오기:</label>
+                        <select id="calc-cust-select" onchange="onCalcCustomerChange()" class="text-xs border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-rose-500 focus:outline-none">
+                            <option value="">-- 고객 선택 --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 고객 상세 조건 입력 -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">고객명</label>
+                        <input type="text" id="calc-name" value="홍길동" class="w-full text-xs border border-slate-300 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">성별</label>
+                        <select id="calc-gender" onchange="triggerCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2">
+                            <option value="M">남성</option>
+                            <option value="F">여성</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">만 나이 (세)</label>
+                        <input type="number" id="calc-age" value="40" min="0" max="85" onchange="triggerCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">직업급수</label>
+                        <select id="calc-job" onchange="triggerCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2">
+                            <option value="1">1급 (사무/관리/전문)</option>
+                            <option value="2">2급 (영업/운전/경포장)</option>
+                            <option value="3">3급 (현장/건설/제조)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">심사 / 병력 유형</label>
+                        <select id="calc-health" onchange="triggerCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2 font-bold text-slate-800">
+                            <option value="healthy_10yr" class="text-emerald-700 font-bold">★ 10년 무사고 고지 할인형 (5.10.10 초건강체, 최대 23% 할인)</option>
+                            <option value="standard" selected>표준체 (일반 건강체 기본형)</option>
+                            <option value="simple_355">간편 3.5.5 (초경증 유병자)</option>
+                            <option value="simple_335">간편 3.3.5 (일반 유병자)</option>
+                            <option value="simple_325">간편 3.2.5 (중경증 유병자)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">납기 / 만기</label>
+                        <select id="calc-term" onchange="triggerCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2">
+                            <option value="20년납_90세만기">20년납 90세만기 (표준)</option>
+                            <option value="20년납_100세만기">20년납 100세만기</option>
+                            <option value="30년납_90세만기">30년납 90세만기</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- 10년 무사고 고지 할인 안내 바 -->
+                <div class="mt-3 p-2.5 rounded-lg bg-emerald-50/90 border border-emerald-300 text-xs flex items-center justify-between shadow-xs">
+                    <div class="flex items-center gap-2 text-emerald-950 break-keep tracking-tight text-[11.5px] leading-snug">
+                        <i class="fa-solid fa-award text-emerald-600 text-sm shrink-0"></i>
+                        <span><strong>10년 무사고 고지 할인 특화</strong>: 10년 이내 입원·수술·중대질환이 없다면 <strong>'★ 10년 무사고 고지 할인형'</strong>을 선택하세요. 표준체 대비 <strong>최대 23% 할인된 최저가</strong>로 자동 비교 산출됩니다.</span>
+                    </div>
+                    <span class="text-[11px] font-black text-emerald-700 bg-white px-2.5 py-0.5 rounded border border-emerald-300 whitespace-nowrap ml-2 shrink-0">최대 23% SAVE</span>
+                </div>
+            </div>
+
+            <!-- 담보 가입금액 설정 및 비교 결과 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- 좌측: 담보별 가입금액 슬라이더 컨트롤러 -->
+                <div class="lg:col-span-5 bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <div class="font-bold text-slate-800 text-sm">
+                            설계 담보별 가입금액 설정
+                            <span id="calc-selected-count" class="ml-1 text-[11px] font-semibold text-rose-600">선택 0개 담보</span>
+                        </div>
+                        <button onclick="resetCoveragesToRecommended()" class="text-xs text-blue-600 hover:underline">
+                            권장금액 리셋
+                        </button>
+                    </div>
+
+                    <!-- 담보 구성 프리셋 (단어 줄바꿈 및 자간 최적화) -->
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" id="preset-btn-core3" onclick="applyPreset('core3')" class="p-2 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-700 text-xs font-bold text-left transition break-keep">
+                            <div class="font-bold whitespace-nowrap tracking-tight">암·뇌·심장 핵심</div>
+                            <span class="block text-[9.5px] font-normal text-slate-500 tracking-tighter leading-tight mt-0.5 break-keep">진단비+통합치료비·전이암·생활비</span>
+                        </button>
+                        <button type="button" id="preset-btn-full" onclick="applyPreset('core3_full')" class="p-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold text-left transition break-keep">
+                            <div class="font-bold whitespace-nowrap tracking-tight">암·뇌·심장 전체 특약</div>
+                            <span class="block text-[9.5px] font-normal text-slate-500 tracking-tighter leading-tight mt-0.5 break-keep">치료비·수술비·입원일당 전체</span>
+                        </button>
+                        <button type="button" id="preset-btn-all" onclick="applyPreset('all')" class="p-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold text-left transition break-keep">
+                            <div class="font-bold whitespace-nowrap tracking-tight">전체 담보 (종합)</div>
+                            <span class="block text-[9.5px] font-normal text-slate-500 tracking-tighter leading-tight mt-0.5 break-keep">일반수술비·배상·운전자 포함</span>
+                        </button>
+                    </div>
+
+                    <!-- 갱신/비갱신 일괄 선택 바 (가로 1줄 고정 & 글자 낙하 방지) -->
+                    <div class="flex items-center justify-between p-2 bg-slate-100 rounded-lg text-xs border border-slate-200 gap-1">
+                        <span class="font-bold text-slate-700 flex items-center gap-1 whitespace-nowrap shrink-0 text-[11px] tracking-tight">
+                            <i class="fa-solid fa-arrows-rotate text-blue-600"></i> 선택특약 갱신유형:
+                        </span>
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button type="button" onclick="setAllSelectableRenewal('non_renewable')" id="btn-global-non-renew" class="px-2 py-1 rounded bg-blue-600 text-white font-bold text-[10.5px] shadow transition whitespace-nowrap tracking-tight flex items-center gap-1">
+                                <i class="fa-solid fa-lock text-[9px]"></i> <span>비갱신형(안정)</span>
+                            </button>
+                            <button type="button" onclick="setAllSelectableRenewal('renewable')" id="btn-global-renew" class="px-2 py-1 rounded bg-white border border-slate-300 text-slate-700 font-bold text-[10.5px] hover:bg-slate-50 transition whitespace-nowrap tracking-tight flex items-center gap-1">
+                                <i class="fa-solid fa-bolt text-amber-500 text-[9px]"></i> <span>갱신형(초기할인)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-[11px] text-slate-500 leading-relaxed break-keep tracking-tight space-y-0.5">
+                        <p>• <b>인기 순</b> 정렬이며, <b>체크박스</b>로 특약을 넣고 뺄 수 있습니다.</p>
+                        <p>• <span class="text-purple-700 font-bold">[갱신형 전용]</span> 특약은 의료기술/손해율 위험으로 8개사 모두 갱신형만 판매합니다.</p>
+                        <p>• <span class="text-blue-700 font-bold">[선택 가능]</span> 특약은 <b>비갱신형</b> 또는 <b>갱신형</b>을 소비자가 직접 선택할 수 있습니다.</p>
+                    </div>
+
+                    <div class="space-y-3 max-h-[640px] overflow-y-auto pr-1" id="calc-coverages-container">
+                        <!-- JS로 담보 컨트롤러 동적 생성 -->
+                    </div>
+
+                    <button onclick="triggerCalculation()" class="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> 8개 보험사 실시간 재계산
+                    </button>
+                </div>
+
+                <!-- 우측: 8개사 비교 결과 카드 & 랭킹 테이블 -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- 요약 하이라이트 -->
+                    <div class="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-xl p-5 shadow flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <div class="text-xs text-blue-300 font-semibold">최적 가성비 추천 보험사</div>
+                            <div class="text-2xl font-black text-rose-400 flex items-center gap-2 mt-1">
+                                <span id="summary-rec-insurer">메리츠화재</span>
+                                <span class="text-xs px-2 py-0.5 rounded bg-rose-600/60 text-white border border-rose-400">BEST CHOICE</span>
+                            </div>
+                            <div class="text-xs text-slate-300 mt-1" id="summary-rec-desc">동일 보장 기준 월 보험료 최저 & 3대 진단비 우수</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-slate-300">최저 월 보험료</div>
+                            <div class="text-3xl font-black text-white mt-1" id="summary-lowest-premium">-- 원</div>
+                            <div class="text-xs text-emerald-400">20년납 90세만기 기준</div>
+                            <div class="text-[11px] text-amber-300 font-semibold mt-1 flex items-center justify-end gap-1" id="summary-commission-badge">
+                                <i class="fa-solid fa-sack-dollar text-amber-400"></i> 예상 수당: 약 -- 원
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 8개사 순위 카드 가로 스크롤 / 그리드 -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="quotes-ranking-cards">
+                        <!-- JS로 8개 보험사 순위 카드 렌더링 -->
+                    </div>
+
+                    <!-- 상세 담보별 8개사 비교 매트릭스 테이블 -->
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-table-cells text-blue-600"></i> 담보별 8개 손보사 보험료 상세 매트릭스
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="openCommissionModal()" class="px-3 py-1.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white rounded text-xs font-bold shadow transition flex items-center gap-1.5 border border-amber-500">
+                                    <i class="fa-solid fa-sack-dollar text-yellow-300"></i> 설계사 수당/시책 조회
+                                </button>
+                                <button onclick="openPrintModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold shadow transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-print"></i> 고객 제안서 출력 (A4)
+                                </button>
+                                <button onclick="saveCurrentProposal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs font-semibold shadow transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-floppy-disk"></i> 제안서 저장
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs text-left border-collapse" id="matrix-table">
+                                <!-- JS 동적 테이블 -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 간병보험 8대 손보사 비교설계 (Caregiver Insurance) -->
+        <section id="tab-caregiver" class="tab-content hidden space-y-6">
+            <!-- 간병보험 설계 조건 설정 바 -->
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-teal-100 text-teal-800 border border-teal-200 mb-1">
+                            <i class="fa-solid fa-heart-pulse text-teal-600"></i> CAREGIVER & LTC SPECIALTY
+                        </div>
+                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-hand-holding-heart text-teal-600"></i> 간병보험 8대 손해보험사 실시간 비교설계
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-0.5">간병인 사용일당, 요양병원, 간호·간병통합서비스, 체증형, 장기요양 1~5등급 재가/시설급여, 치매진단비를 8대 손보사별로 즉시 비교합니다.</p>
+                    </div>
+
+                    <!-- 고객 바로 불러오기 -->
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs font-semibold text-slate-600 whitespace-nowrap">고객 불러오기:</label>
+                        <select id="cg-cust-select" onchange="onCgCustomerChange()" class="text-xs border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                            <option value="">-- 고객 선택 --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 고객 상세 조건 입력 -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">고객명</label>
+                        <input type="text" id="cg-name" value="김영희" class="w-full text-xs border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">성별</label>
+                        <select id="cg-gender" onchange="triggerCaregiverCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500">
+                            <option value="F" selected>여성 (치매/간병 집중)</option>
+                            <option value="M">남성</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">만 나이 (세)</label>
+                        <input type="number" id="cg-age" value="60" min="20" max="85" onchange="triggerCaregiverCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">직업급수</label>
+                        <select id="cg-job" onchange="triggerCaregiverCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500">
+                            <option value="1">1급 (주부/사무/관리)</option>
+                            <option value="2">2급 (서비스/운전)</option>
+                            <option value="3">3급 (현장/단순노무)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">심사 / 병력 유형</label>
+                        <select id="cg-health" onchange="triggerCaregiverCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500 font-bold text-slate-800">
+                            <option value="healthy_10yr" class="text-teal-700 font-bold">★ 10년 무사고 고지 할인형 (장기요양/치매 초건강 15% 할인)</option>
+                            <option value="standard" selected>표준체 (일반 건강체 플랜)</option>
+                            <option value="simple_355">간편 3.5.5 (초경증 유병자)</option>
+                            <option value="simple_335">간편 3.3.5 (일반 유병자)</option>
+                            <option value="simple_325">간편 3.2.5 (맞춤 간병 유병자)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-600 mb-1">납기 / 만기</label>
+                        <select id="cg-term" onchange="triggerCaregiverCalculation()" class="w-full text-xs border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-teal-500">
+                            <option value="20년납_90세만기">20년납 90세만기 (표준)</option>
+                            <option value="20년납_100세만기">20년납 100세만기</option>
+                            <option value="10년갱신">10년 갱신형 (초기 실속)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 원터치 추천 플랜 프리셋 바 -->
+                <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-1.5 text-xs text-slate-500 font-semibold">
+                        <i class="fa-solid fa-wand-magic-sparkles text-teal-600"></i> 원터치 인기 플랜:
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="applyCaregiverPreset('basic')" class="px-3 py-1.5 bg-teal-50 hover:bg-teal-100 text-teal-700 rounded-lg text-xs font-bold border border-teal-200 transition flex items-center gap-1">
+                            <i class="fa-solid fa-star text-amber-500"></i> 간병인 사용일당 실속형 (15만+3만+5만)
+                        </button>
+                        <button type="button" onclick="applyCaregiverPreset('escalating')" class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-bold border border-blue-200 transition flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-trend-up text-blue-600"></i> 체증형 간병인 풀패키지 (체증15만+1인실50만)
+                        </button>
+                        <button type="button" onclick="applyCaregiverPreset('ltc')" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-xs font-bold border border-emerald-200 transition flex items-center gap-1">
+                            <i class="fa-solid fa-house-chimney-medical text-emerald-600"></i> 장기요양(LTC) 재가·시설 플랜 (월50만)
+                        </button>
+                        <button type="button" onclick="applyCaregiverPreset('dementia')" class="px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-lg text-xs font-bold border border-purple-200 transition flex items-center gap-1">
+                            <i class="fa-solid fa-brain text-purple-600"></i> 치매 집중 케어 (경도500+중증2천+월100만)
+                        </button>
+                        <button type="button" onclick="applyCaregiverPreset('reset')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-semibold border border-slate-200 transition">
+                            <i class="fa-solid fa-rotate-left"></i> 초기화
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 메인 컨텐츠 그리드: 좌측 특약 설정기 vs 우측 비교 결과 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- 좌측: 간병보험 15개 특약 가입금액 및 갱신 설정 패널 -->
+                <div class="lg:col-span-5 bg-white rounded-xl p-5 shadow-sm border border-slate-200 space-y-4">
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                                <i class="fa-solid fa-sliders text-teal-600"></i> 간병보험 특약 선택 & 가입금액 조절
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-0.5">원하는 특약 체크 및 금액 조절 시 즉시 실시간 재계산됩니다.</p>
+                        </div>
+                        <span id="cg-active-cov-badge" class="px-2 py-0.5 bg-teal-100 text-teal-800 rounded text-xs font-bold">
+                            4개 담보 선택
+                        </span>
+                    </div>
+
+                    <!-- 간병보험 4개 카테고리별 특약 리스트 컨테이너 -->
+                    <div class="space-y-4 max-h-[720px] overflow-y-auto pr-1" id="cg-coverages-container">
+                        <!-- JS로 4개 그룹별 담보 동적 렌더링 -->
+                    </div>
+                </div>
+
+                <!-- 우측: 8대 손보사 간병보험 비교 결과 패널 -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- 상단 요약 배지 바 -->
+                    <div class="bg-gradient-to-r from-teal-900 to-slate-900 rounded-xl p-5 text-white shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <div class="text-xs text-teal-300 font-semibold flex items-center gap-1">
+                                <i class="fa-solid fa-shield-halved"></i> 8대 손해보험사 간병보험 실시간 견적 완료
+                            </div>
+                            <div class="text-xl sm:text-2xl font-black mt-1" id="cg-result-summary-text">
+                                최저가: <span class="text-teal-400" id="cg-lowest-insurer">계산 중...</span>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-1" id="cg-result-detail-text">
+                                60세 여성 기준 20년납 90세만기 비갱신 설계
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openCaregiverCommissionModal()" class="px-3 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white rounded-lg text-xs font-bold shadow transition flex items-center gap-1.5 border border-amber-500">
+                                <i class="fa-solid fa-sack-dollar text-yellow-300"></i> 설계사 수당/시책 조회
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 8개사 순위 카드 그리드 -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="cg-quotes-ranking-cards">
+                        <!-- JS 동적 생성 -->
+                    </div>
+
+                    <!-- 상세 담보별 8개 손보사 비교 매트릭스 테이블 -->
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-table-cells text-teal-600"></i> 간병 담보별 8개 손보사 보험료 상세 매트릭스
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="openCaregiverCommissionModal()" class="px-3 py-1.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white rounded text-xs font-bold shadow transition flex items-center gap-1.5 border border-amber-500">
+                                    <i class="fa-solid fa-sack-dollar text-yellow-300"></i> 수당/시책 조회
+                                </button>
+                                <button onclick="openCaregiverPrintModal()" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white rounded text-xs font-semibold shadow transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-print"></i> 간병 제안서 출력 (A4)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs text-left border-collapse" id="cg-matrix-table">
+                                <!-- JS 동적 테이블 -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: 원수사 전산 RPA 연동 브릿지 -->
+        <section id="tab-rpa" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="px-2.5 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold mb-2 inline-block">
+                        AUTOMATION BRIDGE
+                    </span>
+                    <h2 class="text-xl font-bold text-slate-900">원수사 전산 자동화 (RPA) 연동 센터</h2>
+                    <p class="text-sm text-slate-500 mt-1">
+                        설계사들이 각 보험사 전산 사이트에 접속했을 때, 고객 인적사항과 설계 담보를 복사-붙여넣기 단축키 혹은 Playwright 자동화 스크립트로 신속하게 입력할 수 있습니다.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- 좌측: 원클릭 클립보드 주입 데이터 -->
+                    <div class="lg:col-span-6 space-y-4">
+                        <div class="font-bold text-slate-800 text-sm flex items-center justify-between">
+                            <span>1. 전산 입력용 표준 텍스트 데이터</span>
+                            <button onclick="copyRPAPayload()" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs font-semibold shadow transition flex items-center gap-1">
+                                <i class="fa-solid fa-copy"></i> 전체 클립보드 복사
+                            </button>
+                        </div>
+                        <textarea id="rpa-clipboard-text" rows="12" readonly class="w-full text-xs font-mono bg-slate-900 text-emerald-400 p-4 rounded-xl border border-slate-700 focus:outline-none"></textarea>
+                        <p class="text-xs text-slate-500">
+                            * 복사 버튼을 누른 후, 원수사 설계 전산 메모장이나 항목별 붙여넣기로 즉시 활용 가능합니다.
+                        </p>
+                    </div>
+
+                    <!-- 우측: 원수사 포털 바로가기 및 자동화 스크립트 -->
+                    <div class="lg:col-span-6 space-y-4">
+                        <div class="font-bold text-slate-800 text-sm">2. 대상 원수사 선택 & 포털 원클릭 접속</div>
+                        <div class="grid grid-cols-2 gap-2" id="rpa-insurers-buttons">
+                            <!-- JS 동적 생성 -->
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-slate-100">
+                            <div class="font-bold text-slate-800 text-sm mb-2 flex items-center justify-between">
+                                <span>3. Python Playwright 자동화 스크립트</span>
+                                <button onclick="downloadRPAScript()" class="text-xs text-blue-600 hover:underline">
+                                    <i class="fa-solid fa-download"></i> 스크립트(.py) 다운로드
+                                </button>
+                            </div>
+                            <pre id="rpa-script-preview" class="text-xs font-mono bg-slate-100 text-slate-800 p-3 rounded-lg border border-slate-200 max-h-52 overflow-y-auto"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: 대리점 설정 -->
+        <section id="tab-settings" class="tab-content hidden space-y-6">
+            <div class="max-w-2xl mx-auto bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <h2 class="text-xl font-bold text-slate-900">법인보험대리점(GA) & 담당 설계사 설정</h2>
+                    <p class="text-sm text-slate-500 mt-1">고객용 비교설계 제안서 및 견적서 상단/하단에 인쇄되는 공식 정보를 입력하세요.</p>
+                </div>
+
+                <form id="settings-form" onsubmit="saveAgencySettings(event)" class="space-y-4 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">법인 대리점 상호명</label>
+                        <input type="text" id="set-agency-name" required class="w-full border border-slate-300 rounded-lg p-2.5">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">대표자명</label>
+                            <input type="text" id="set-representative" class="w-full border border-slate-300 rounded-lg p-2.5">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">대리점 등록번호</label>
+                            <input type="text" id="set-reg-no" class="w-full border border-slate-300 rounded-lg p-2.5">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">대표 전화번호</label>
+                        <input type="text" id="set-contact" class="w-full border border-slate-300 rounded-lg p-2.5">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">담당 설계사 성명</label>
+                            <input type="text" id="set-agent-name" required class="w-full border border-slate-300 rounded-lg p-2.5">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">설계사 직통 연락처</label>
+                            <input type="text" id="set-agent-contact" required class="w-full border border-slate-300 rounded-lg p-2.5">
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition">
+                            대리점 및 설계사 정보 저장
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 고객 등록/수정 모달 -->
+    <div id="customer-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900 text-lg">신규 고객 등록</h3>
+                <button onclick="closeCustomerModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="customer-form" onsubmit="handleCustomerSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1">고객 성명 *</label>
+                    <input type="text" id="cust-name" required placeholder="홍길동" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">성별 *</label>
+                        <select id="cust-gender" required class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                            <option value="M">남성</option>
+                            <option value="F">여성</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">생년월일 *</label>
+                        <input type="date" id="cust-birthdate" value="1985-06-15" required class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">직업급수</label>
+                        <select id="cust-job-grade" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                            <option value="1">1급 (사무/전문직)</option>
+                            <option value="2">2급 (영업/운전/경포장)</option>
+                            <option value="3">3급 (현장/건설/제조)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">직업 상세명</label>
+                        <input type="text" id="cust-job-name" value="일반 회사원" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">연락처</label>
+                        <input type="text" id="cust-phone" placeholder="010-0000-0000" class="w-full border border-slate-300 rounded-lg p-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">심사 유형</label>
+                        <select id="cust-health-type" class="w-full border border-slate-300 rounded-lg p-2 text-sm font-semibold">
+                            <option value="healthy_10yr">★ 10년 무사고 고지 할인형 (5.10.10 초건강체)</option>
+                            <option value="standard" selected>표준체 (일반 건강체)</option>
+                            <option value="simple_355">간편 3.5.5 (초경증 유병자)</option>
+                            <option value="simple_335">간편 3.3.5 (유병자)</option>
+                            <option value="simple_325">간편 3.2.5 (중경증 유병자)</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-medium text-slate-700 mb-1">상담 메모</label>
+                    <textarea id="cust-memo" rows="2" placeholder="고객 희망 보장 및 특이사항" class="w-full border border-slate-300 rounded-lg p-2 text-sm"></textarea>
+                </div>
+
+                <div class="pt-3">
+                    <button type="submit" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition">
+                        고객 등록 완료
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 설계사 전용 예상 수당 및 시책 분석 모달 -->
+    <div id="commission-modal" class="fixed inset-0 bg-slate-900/80 z-50 hidden overflow-y-auto p-4 sm:p-8 flex justify-center items-center print:hidden">
+        <div class="bg-white rounded-2xl max-w-5xl w-full p-6 sm:p-8 shadow-2xl relative my-auto space-y-5">
+            <!-- 모달 상단 헤더 -->
+            <div class="flex justify-between items-start border-b border-slate-200 pb-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[11px] font-bold border border-amber-300">
+                            <i class="fa-solid fa-lock text-[10px]"></i> 대리점 설계사 전용 (고객 비공개)
+                        </span>
+                        <span class="text-xs text-slate-400">1200% 룰 및 원수사별 수수료 테이블 기준</span>
+                    </div>
+                    <h2 class="text-xl font-black text-slate-900 mt-1 flex items-center gap-2">
+                        <i class="fa-solid fa-sack-dollar text-amber-500"></i> 현재 설계안 기준 설계사 예상 수당 및 시책 분석
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-0.5">
+                        <span id="comm-cust-summary" class="font-bold text-slate-700">홍길동 (만 40세, 남성)</span> 고객님의 현재 설계 조건 가입 시 원수사별 수령 예상액입니다.
+                    </p>
+                </div>
+                <button onclick="closeCommissionModal()" class="text-slate-400 hover:text-slate-600 p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- GA 정산 구간 조절 바 -->
+            <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs">
+                <div>
+                    <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-sliders text-amber-600"></i> 내 GA 수수료 지급률(정산 구간) 설정
+                    </div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">대리점 내 직급이나 지급률 테이블에 따라 실수령액이 실시간 재계산됩니다.</div>
+                </div>
+
+                <div class="flex items-center gap-2 flex-wrap">
+                    <div class="inline-flex rounded-lg border border-slate-300 bg-white p-0.5 shadow-xs" role="group">
+                        <button type="button" onclick="setCommissionShare(100)" id="btn-share-100" class="px-2.5 py-1 rounded text-xs font-bold transition text-slate-600 hover:bg-slate-100">본부장 (100%)</button>
+                        <button type="button" onclick="setCommissionShare(85)" id="btn-share-85" class="px-2.5 py-1 rounded text-xs font-bold transition text-slate-600 hover:bg-slate-100">팀장급 (85%)</button>
+                        <button type="button" onclick="setCommissionShare(75)" id="btn-share-75" class="px-2.5 py-1 rounded text-xs font-bold transition bg-amber-600 text-white shadow-xs">일반FC (75%)</button>
+                        <button type="button" onclick="setCommissionShare(65)" id="btn-share-65" class="px-2.5 py-1 rounded text-xs font-bold transition text-slate-600 hover:bg-slate-100">신인FC (65%)</button>
+                    </div>
+
+                    <div class="flex items-center gap-1.5 pl-2 border-l border-amber-200">
+                        <span class="font-bold text-slate-700">적용률:</span>
+                        <span class="font-black text-amber-700 text-sm" id="comm-share-display">75%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8대 손보사 수당 비교 테이블 -->
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                            <th class="p-3 font-bold">순위 / 보험사명</th>
+                            <th class="p-3 text-right">고객 월 보험료</th>
+                            <th class="p-3 text-center">GA 총지급률</th>
+                            <th class="p-3 text-right bg-amber-100/50 text-amber-950 font-black">설계사 총 수당</th>
+                            <th class="p-3 text-right">익월 즉시 수령 (약40%)</th>
+                            <th class="p-3 text-right">1차년도 수령 (약72%)</th>
+                            <th class="p-3 text-right">2차년도 유지수수료</th>
+                            <th class="p-3 text-right text-emerald-800 font-bold">3.3% 공제 후 실수령</th>
+                        </tr>
+                    </thead>
+                    <tbody id="commission-table-body" class="divide-y divide-slate-100">
+                        <!-- JS 렌더링 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 하단 영업 분석 팁 카드 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-1">
+                    <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-trophy text-amber-500"></i> 수당 최고 우대 손보사
+                    </div>
+                    <div class="text-slate-600" id="comm-best-income-desc">
+                        분석 계산 중...
+                    </div>
+                </div>
+
+                <div class="bg-blue-50/60 border border-blue-200 rounded-xl p-3.5 space-y-1">
+                    <div class="font-bold text-blue-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-scale-balanced text-blue-600"></i> 고객 가성비 vs 수당 균형 추천
+                    </div>
+                    <div class="text-blue-800" id="comm-balance-desc">
+                        고객 만족도와 설계사 수수료를 동시에 만족하는 최적사는 메리츠화재 및 DB손해보험입니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 안내 및 법적 주의사항 -->
+            <div class="text-[10px] text-slate-400 border-t border-slate-200 pt-3 flex justify-between items-center">
+                <span>※ 상기 수당 및 시책 추정액은 원수사별 평균 시책 기준이며, GA 본사 및 지점 규정에 따라 차이가 있을 수 있습니다.</span>
+                <button onclick="closeCommissionModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg text-xs transition">
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 고객 맞춤 제안서 인쇄 모달 (A4 출력용 뷰) -->
+    <div id="print-modal" class="fixed inset-0 bg-slate-900/80 z-50 hidden overflow-y-auto p-4 sm:p-8 flex justify-center">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-8 shadow-2xl relative my-auto">
+            <!-- 모달 상단 조작 버튼 (인쇄 시 숨김) -->
+            <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6 print:hidden">
+                <div class="font-bold text-slate-900 text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-file-pdf text-rose-600"></i> 고객용 8대 손보사 비교설계 제안서 미리보기
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="window.print()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-sm shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-print"></i> 인쇄 또는 PDF 저장 (Ctrl+P)
+                    </button>
+                    <button onclick="closePrintModal()" class="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-sm font-semibold">
+                        닫기
+                    </button>
+                </div>
+            </div>
+
+            <!-- 실제 인쇄될 제안서 본문 (A4 최적화) -->
+            <div id="proposal-printable-sheet" class="printable-doc text-slate-900">
+                <!-- 제안서 헤더 -->
+                <div class="flex justify-between items-start border-b-2 border-slate-900 pb-4 mb-6">
+                    <div>
+                        <span class="text-xs font-bold text-blue-700 tracking-wider">GA MULTI-INSURER CUSTOM PLAN</span>
+                        <h1 class="text-2xl font-black tracking-tight text-slate-900 mt-0.5">
+                            <span id="print-cust-name">홍길동</span> 고객님을 위한 8대 손해보험사 비교 맞춤 제안서
+                        </h1>
+                        <p class="text-xs text-slate-500 mt-1">
+                            동일 보장 기준 전 보험사 요율 및 인수조건을 비교 분석한 최적의 포트폴리오입니다.
+                        </p>
+                    </div>
+                    <div class="text-right text-xs">
+                        <div class="font-bold text-slate-800" id="print-agency-name">인슈탑 법인보험대리점(GA)</div>
+                        <div class="text-slate-500">담당 설계사: <span id="print-agent-name" class="font-semibold text-slate-800">수석설계사</span></div>
+                        <div class="text-slate-500">직통 문의: <span id="print-agent-contact" class="font-semibold text-slate-800">010-1234-5678</span></div>
+                        <div class="text-slate-400 text-[10px]" id="print-date">작성일: 2026. 10. 30</div>
+                    </div>
+                </div>
+
+                <!-- 고객 프로필 요약 박스 -->
+                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-6 grid grid-cols-4 gap-3 text-xs">
+                    <div>
+                        <span class="text-slate-500 block">피보험자 성명</span>
+                        <span class="font-bold text-slate-800 text-sm" id="print-p-name">홍길동</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">연령 / 성별</span>
+                        <span class="font-bold text-slate-800 text-sm" id="print-p-age">만 40세 (남성)</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">직업급수 / 심사유형</span>
+                        <span class="font-bold text-slate-800 text-sm" id="print-p-job">1급 (표준체)</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">설계 조건</span>
+                        <span class="font-bold text-blue-700 text-sm" id="print-p-term">20년납 90세만기</span>
+                    </div>
+                </div>
+
+                <!-- 추천 1위 vs 차선 2위 요약 비교 카드 -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="border-2 border-rose-500 bg-rose-50/40 rounded-xl p-4">
+                        <span class="px-2 py-0.5 bg-rose-600 text-white rounded text-[10px] font-bold">1순위 추천 플랜 (가성비 1등)</span>
+                        <div class="text-lg font-black text-slate-900 mt-1" id="print-best-insurer">메리츠화재</div>
+                        <div class="text-xs text-slate-600" id="print-best-product">내Mom같은 맞춤건강보험</div>
+                        <div class="text-2xl font-black text-rose-600 mt-2" id="print-best-premium">월 0원</div>
+                        <div class="text-xs text-rose-800 mt-1" id="print-best-strength">• 3대 진단비 최저가 및 신속 심사</div>
+                    </div>
+                    <div class="border border-slate-300 bg-slate-50 rounded-xl p-4">
+                        <span class="px-2 py-0.5 bg-slate-700 text-white rounded text-[10px] font-bold">2순위 균형 플랜 (수술비 강화)</span>
+                        <div class="text-lg font-black text-slate-900 mt-1" id="print-second-insurer">DB손해보험</div>
+                        <div class="text-xs text-slate-600" id="print-second-product">참좋은훼밀리더블플러스</div>
+                        <div class="text-2xl font-black text-slate-800 mt-2" id="print-second-premium">월 0원</div>
+                        <div class="text-xs text-slate-600 mt-1" id="print-second-strength">• 질병 1~5종 수술비 경쟁력 탁월</div>
+                    </div>
+                </div>
+
+                <!-- 담보별 상세 비교 테이블 -->
+                <div class="mb-6">
+                    <div class="text-xs font-bold text-slate-800 mb-2 flex justify-between items-center">
+                        <span>■ 주요 8개 손해보험사 담보별 월 보험료 비교표</span>
+                        <span class="text-[10px] text-slate-500">(단위: 원, 10원 단위 절사)</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs border border-slate-200" id="print-matrix-table">
+                            <!-- JS 주입 -->
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 제안서 안내 사항 및 법적 고지 -->
+                <div class="border-t border-slate-200 pt-3 text-[10px] text-slate-400 space-y-1">
+                    <p>※ 본 제안서는 고객님의 이해를 돕기 위해 GA-INSIGHT 비교설계 엔진을 통해 산출된 참고용 자료입니다.</p>
+                    <p>※ 실제 청약 시 가입자의 병력, 직업 및 원수사별 인수지침에 따라 보험료 및 가입금액 한도가 일부 변동될 수 있습니다.</p>
+                    <p>※ 계약 체결 전 반드시 해당 상품의 약관 및 상품설명서를 확인하시기 바랍니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 설계사 전용 예상 수당 및 시책 분석 모달 -->
+    <div id="commission-modal" class="fixed inset-0 bg-slate-900/80 z-50 hidden overflow-y-auto p-4 sm:p-8 flex justify-center items-center print:hidden">
+        <div class="bg-white rounded-2xl max-w-5xl w-full p-6 sm:p-8 shadow-2xl relative my-auto space-y-5">
+            <!-- 모달 상단 헤더 -->
+            <div class="flex justify-between items-start border-b border-slate-200 pb-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[11px] font-bold border border-amber-300">
+                            <i class="fa-solid fa-lock text-[10px]"></i> 대리점 설계사 전용 (고객 비공개)
+                        </span>
+                        <span class="text-xs text-slate-400">1200% 룰 및 원수사별 수수료 테이블 기준</span>
+                    </div>
+                    <h2 class="text-xl font-black text-slate-900 mt-1 flex items-center gap-2">
+                        <i class="fa-solid fa-sack-dollar text-amber-500"></i> 현재 설계안 기준 설계사 예상 수당 및 시책 분석
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-0.5">
+                        <span id="comm-cust-summary" class="font-bold text-slate-700">홍길동 (만 40세, 남성)</span> 고객님의 현재 설계 조건 가입 시 원수사별 수령 예상액입니다.
+                    </p>
+                </div>
+                <button onclick="closeCommissionModal()" class="text-slate-400 hover:text-slate-600 p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- GA 정산 구간 조절 바 -->
+            <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs">
+                <div>
+                    <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-sliders text-amber-600"></i> 내 GA 수수료 지급률(정산 구간) 설정
+                    </div>
+                    <div class="text-[11px] text-slate-500 mt-0.5">대리점 내 직급이나 지급률 테이블에 따라 실수령액이 실시간 재계산됩니다.</div>
+                </div>
+
+                <div class="flex items-center gap-2 flex-wrap">
+                    <div class="inline-flex rounded-lg border border-slate-300 bg-white p-0.5 shadow-xs" role="group">
+                        <button type="button" onclick="setCommissionShare(100)" id="btn-share-100" class="px-2.5 py-1 rounded text-xs font-bold transition text-slate-600 hover:bg-slate-100">본부장 (100%)</button>
+                        <button type="button" onclick="setCommissionShare(85)" id="btn-share-85" class="px-2.5 py-1 rounded text-xs font-bold transition text-slate-600 hover:bg-slate-100">팀장급 (85%)</button>
+                        <button type="button" onclick="setCommissionShare(75)" id="btn-share-75" class="px-2.5 py-1 rounded text-xs font-bold transition bg-amber-600 text-white shadow-xs">일반FC (75%)</button>
+                        <button type="button" onclick="setCommissionShare(65)" id="btn-share-65" class="px-2.5 py-1 rounded text-xs font-bold transition text-slate-600 hover:bg-slate-100">신인FC (65%)</button>
+                    </div>
+
+                    <div class="flex items-center gap-1.5 pl-2 border-l border-amber-200">
+                        <span class="font-bold text-slate-700">적용률:</span>
+                        <span class="font-black text-amber-700 text-sm" id="comm-share-display">75%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8대 손보사 수당 비교 테이블 -->
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                            <th class="p-3 font-bold">순위 / 보험사명</th>
+                            <th class="p-3 text-right">고객 월 보험료</th>
+                            <th class="p-3 text-center">GA 총지급률</th>
+                            <th class="p-3 text-right bg-amber-100/50 text-amber-950 font-black">설계사 총 수당</th>
+                            <th class="p-3 text-right">익월 즉시 수령 (약40%)</th>
+                            <th class="p-3 text-right">1차년도 수령 (약72%)</th>
+                            <th class="p-3 text-right">2차년도 유지수수료</th>
+                            <th class="p-3 text-right text-emerald-800 font-bold">3.3% 공제 후 실수령</th>
+                        </tr>
+                    </thead>
+                    <tbody id="commission-table-body" class="divide-y divide-slate-100">
+                        <!-- JS 렌더링 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 하단 영업 분석 팁 카드 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-1">
+                    <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-trophy text-amber-500"></i> 수당 최고 우대 손보사
+                    </div>
+                    <div class="text-slate-600" id="comm-best-income-desc">
+                        분석 계산 중...
+                    </div>
+                </div>
+
+                <div class="bg-blue-50/60 border border-blue-200 rounded-xl p-3.5 space-y-1">
+                    <div class="font-bold text-blue-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-scale-balanced text-blue-600"></i> 고객 가성비 vs 수당 균형 추천
+                    </div>
+                    <div class="text-blue-800" id="comm-balance-desc">
+                        고객 만족도와 설계사 수수료를 동시에 만족하는 최적사는 메리츠화재 및 DB손해보험입니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 안내 및 법적 주의사항 -->
+            <div class="text-[10px] text-slate-400 border-t border-slate-200 pt-3 flex justify-between items-center">
+                <span>※ 상기 수당 및 시책 추정액은 원수사별 평균 시책 기준이며, GA 본사 및 지점 규정에 따라 차이가 있을 수 있습니다.</span>
+                <button onclick="closeCommissionModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg text-xs transition">
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 푸터 -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 print:hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+            <p class="font-semibold text-slate-700">GA-INSIGHT 손해보험 법인대리점 통합설계 솔루션</p>
+            <p class="mt-1">지원 원수사: 메리츠화재 · 삼성화재 · DB손해보험 · 현대해상 · KB손해보험 · 한화손해보험 · 흥국화재 · 롯데손해보험</p>
+            <p class="mt-1 text-slate-400">&copy; 2026 GA Multi-Insurer Smart Design Engine. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 스탠드얼론 클라이언트 계산 엔진 (100% 브라우저 독립 연산 지원) -->
+    <script src="./js/standalone_engine.js"></script>
+    <script>
+        if (!window.STANDALONE_MASTER) {
+            document.write('<script src="./static/js/standalone_engine.js"><\/script>');
+        }
+    </script>
+    <!-- 프론트엔드 자바스크립트 -->
+    <script src="./js/app.js"></script>
+    <script>
+        if (typeof switchTab === 'undefined') {
+            document.write('<script src="./static/js/app.js"><\/script>');
+        }
+    </script>
+</body>
+</html>

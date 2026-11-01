@@ -632,16 +632,16 @@ function renewalBadgeAndSelector(c) {
                 </span>
                 <span class="text-slate-400 text-[10px]">소비자 직접선택</span>
             </div>
-            <div class="inline-flex rounded-md shadow-xs text-[10px] border border-slate-200 overflow-hidden" role="group">
-                <button type="button" id="btn-renew-${c.code}-non" onclick="setRiderRenewal('${c.code}', 'non_renewable')" class="px-2 py-0.5 font-bold transition ${isNonRenew ? 'bg-blue-600 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}">
-                    비갱신형 (만기까지 불변)
+            <div class="inline-flex rounded-md shadow-xs text-[10px] border border-slate-200 overflow-hidden shrink-0" role="group">
+                <button type="button" id="btn-renew-${c.code}-non" onclick="setRiderRenewal('${c.code}', 'non_renewable')" class="px-2 py-0.5 font-bold transition whitespace-nowrap tracking-tight ${isNonRenew ? 'bg-blue-600 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}">
+                    비갱신형(안정)
                 </button>
-                <button type="button" id="btn-renew-${c.code}-ren" onclick="setRiderRenewal('${c.code}', 'renewable')" class="px-2 py-0.5 font-bold transition ${!isNonRenew ? 'bg-amber-600 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}">
-                    갱신형 (약 55% 초기할인)
+                <button type="button" id="btn-renew-${c.code}-ren" onclick="setRiderRenewal('${c.code}', 'renewable')" class="px-2 py-0.5 font-bold transition whitespace-nowrap tracking-tight ${!isNonRenew ? 'bg-amber-600 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}">
+                    갱신형(초기할인)
                 </button>
             </div>
         </div>
-        <div class="text-[10px] text-slate-400 leading-snug mt-0.5">
+        <div class="text-[10px] text-slate-400 leading-snug mt-0.5 break-keep">
             ${c.renewal_desc}
         </div>
     `;
@@ -723,11 +723,11 @@ function updateRiderRenewalButtons(code) {
 
     const currentChoice = riderRenewalSettings[code] || 'non_renewable';
     if (currentChoice === 'non_renewable') {
-        btnNon.className = "px-2 py-0.5 font-bold transition bg-blue-600 text-white";
-        btnRen.className = "px-2 py-0.5 font-bold transition bg-white text-slate-600 hover:bg-slate-50";
+        btnNon.className = "px-2 py-0.5 font-bold transition whitespace-nowrap tracking-tight bg-blue-600 text-white";
+        btnRen.className = "px-2 py-0.5 font-bold transition whitespace-nowrap tracking-tight bg-white text-slate-600 hover:bg-slate-50";
     } else {
-        btnRen.className = "px-2 py-0.5 font-bold transition bg-amber-600 text-white";
-        btnNon.className = "px-2 py-0.5 font-bold transition bg-white text-slate-600 hover:bg-slate-50";
+        btnRen.className = "px-2 py-0.5 font-bold transition whitespace-nowrap tracking-tight bg-amber-600 text-white";
+        btnNon.className = "px-2 py-0.5 font-bold transition whitespace-nowrap tracking-tight bg-white text-slate-600 hover:bg-slate-50";
     }
 }
 
@@ -744,11 +744,11 @@ function setAllSelectableRenewal(type) {
     const btnRen = document.getElementById('btn-global-renew');
     if (btnNon && btnRen) {
         if (type === 'non_renewable') {
-            btnNon.className = "px-2.5 py-1 rounded bg-blue-600 text-white font-bold text-[11px] shadow transition";
-            btnRen.className = "px-2.5 py-1 rounded bg-white border border-slate-300 text-slate-700 font-bold text-[11px] hover:bg-slate-50 transition";
+            btnNon.className = "px-2 py-1 rounded bg-blue-600 text-white font-bold text-[10.5px] shadow transition whitespace-nowrap tracking-tight flex items-center gap-1";
+            btnRen.className = "px-2 py-1 rounded bg-white border border-slate-300 text-slate-700 font-bold text-[10.5px] hover:bg-slate-50 transition whitespace-nowrap tracking-tight flex items-center gap-1";
         } else {
-            btnRen.className = "px-2.5 py-1 rounded bg-amber-600 text-white font-bold text-[11px] shadow transition";
-            btnNon.className = "px-2.5 py-1 rounded bg-white border border-slate-300 text-slate-700 font-bold text-[11px] hover:bg-slate-50 transition";
+            btnRen.className = "px-2 py-1 rounded bg-amber-600 text-white font-bold text-[10.5px] shadow transition whitespace-nowrap tracking-tight flex items-center gap-1";
+            btnNon.className = "px-2 py-1 rounded bg-white border border-slate-300 text-slate-700 font-bold text-[10.5px] hover:bg-slate-50 transition whitespace-nowrap tracking-tight flex items-center gap-1";
         }
     }
     triggerCalculation();
@@ -802,8 +802,8 @@ function setCoverageAmount(code, amount) {
 }
 
 function updatePresetButtons() {
-    const on = "px-2 py-2 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-700 text-xs font-bold text-left transition";
-    const off = "px-2 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold text-left transition";
+    const on = "p-2 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-700 text-xs font-bold text-left transition break-keep";
+    const off = "p-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold text-left transition break-keep";
     const map = { core3: 'preset-btn-core3', core3_full: 'preset-btn-full', all: 'preset-btn-all' };
     Object.entries(map).forEach(([key, id]) => {
         const el = document.getElementById(id);

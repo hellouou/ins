@@ -400,11 +400,11 @@
                 </div>
                 <!-- 10년 무사고 고지 할인 안내 바 -->
                 <div class="mt-3 p-2.5 rounded-lg bg-emerald-50/90 border border-emerald-300 text-xs flex items-center justify-between shadow-xs">
-                    <div class="flex items-center gap-2 text-emerald-950">
-                        <i class="fa-solid fa-award text-emerald-600 text-sm"></i>
-                        <span><strong>10년 무사고 고지 할인 특화</strong>: 최근 10년 이내 입원·수술·중대질환 이력이 없으시다면 <strong>'★ 10년 무사고 고지 할인형'</strong>을 선택하세요. 표준체 대비 <strong>최대 23% 저렴한 가격</strong>으로 자동 비교 산출됩니다.</span>
+                    <div class="flex items-center gap-2 text-emerald-950 break-keep tracking-tight text-[11.5px] leading-snug">
+                        <i class="fa-solid fa-award text-emerald-600 text-sm shrink-0"></i>
+                        <span><strong>10년 무사고 고지 할인 특화</strong>: 10년 이내 입원·수술·중대질환이 없다면 <strong>'★ 10년 무사고 고지 할인형'</strong>을 선택하세요. 표준체 대비 <strong>최대 23% 할인된 최저가</strong>로 자동 비교 산출됩니다.</span>
                     </div>
-                    <span class="text-[11px] font-black text-emerald-700 bg-white px-2.5 py-0.5 rounded border border-emerald-300 whitespace-nowrap ml-2">최대 23% SAVE</span>
+                    <span class="text-[11px] font-black text-emerald-700 bg-white px-2.5 py-0.5 rounded border border-emerald-300 whitespace-nowrap ml-2 shrink-0">최대 23% SAVE</span>
                 </div>
             </div>
 
@@ -422,42 +422,42 @@
                         </button>
                     </div>
 
-                    <!-- 담보 구성 프리셋 -->
+                    <!-- 담보 구성 프리셋 (단어 줄바꿈 및 자간 최적화) -->
                     <div class="grid grid-cols-3 gap-2">
-                        <button type="button" id="preset-btn-core3" onclick="applyPreset('core3')" class="px-2 py-2 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-700 text-xs font-bold text-left transition">
-                            암·뇌·심장 핵심
-                            <span class="block text-[10px] font-normal text-slate-500">진단비 + 통합암치료비·전이암·생활비</span>
+                        <button type="button" id="preset-btn-core3" onclick="applyPreset('core3')" class="p-2 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-700 text-xs font-bold text-left transition break-keep">
+                            <div class="font-bold whitespace-nowrap tracking-tight">암·뇌·심장 핵심</div>
+                            <span class="block text-[9.5px] font-normal text-slate-500 tracking-tighter leading-tight mt-0.5 break-keep">진단비+통합치료비·전이암·생활비</span>
                         </button>
-                        <button type="button" id="preset-btn-full" onclick="applyPreset('core3_full')" class="px-2 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold text-left transition">
-                            암·뇌·심장 전체 특약
-                            <span class="block text-[10px] font-normal text-slate-500">치료비·수술비·입원일당 등 모두</span>
+                        <button type="button" id="preset-btn-full" onclick="applyPreset('core3_full')" class="p-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold text-left transition break-keep">
+                            <div class="font-bold whitespace-nowrap tracking-tight">암·뇌·심장 전체 특약</div>
+                            <span class="block text-[9.5px] font-normal text-slate-500 tracking-tighter leading-tight mt-0.5 break-keep">치료비·수술비·입원일당 전체</span>
                         </button>
-                        <button type="button" id="preset-btn-all" onclick="applyPreset('all')" class="px-2 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold text-left transition">
-                            전체 담보
-                            <span class="block text-[10px] font-normal text-slate-500">일반수술비·배상·운전자 포함</span>
+                        <button type="button" id="preset-btn-all" onclick="applyPreset('all')" class="p-2 rounded-lg border border-slate-300 bg-white text-slate-700 text-xs font-bold text-left transition break-keep">
+                            <div class="font-bold whitespace-nowrap tracking-tight">전체 담보 (종합)</div>
+                            <span class="block text-[9.5px] font-normal text-slate-500 tracking-tighter leading-tight mt-0.5 break-keep">일반수술비·배상·운전자 포함</span>
                         </button>
                     </div>
 
-                    <!-- 갱신/비갱신 일괄 선택 바 -->
-                    <div class="flex items-center justify-between p-2.5 bg-slate-100 rounded-lg text-xs border border-slate-200">
-                        <span class="font-bold text-slate-700 flex items-center gap-1.5">
-                            <i class="fa-solid fa-arrows-rotate text-blue-600"></i> 선택가능 특약 갱신유형:
+                    <!-- 갱신/비갱신 일괄 선택 바 (가로 1줄 고정 & 글자 낙하 방지) -->
+                    <div class="flex items-center justify-between p-2 bg-slate-100 rounded-lg text-xs border border-slate-200 gap-1">
+                        <span class="font-bold text-slate-700 flex items-center gap-1 whitespace-nowrap shrink-0 text-[11px] tracking-tight">
+                            <i class="fa-solid fa-arrows-rotate text-blue-600"></i> 선택특약 갱신유형:
                         </span>
-                        <div class="flex gap-1.5">
-                            <button type="button" onclick="setAllSelectableRenewal('non_renewable')" id="btn-global-non-renew" class="px-2.5 py-1 rounded bg-blue-600 text-white font-bold text-[11px] shadow transition">
-                                <i class="fa-solid fa-lock text-[10px]"></i> 비갱신형 (안정형)
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button type="button" onclick="setAllSelectableRenewal('non_renewable')" id="btn-global-non-renew" class="px-2 py-1 rounded bg-blue-600 text-white font-bold text-[10.5px] shadow transition whitespace-nowrap tracking-tight flex items-center gap-1">
+                                <i class="fa-solid fa-lock text-[9px]"></i> <span>비갱신형(안정)</span>
                             </button>
-                            <button type="button" onclick="setAllSelectableRenewal('renewable')" id="btn-global-renew" class="px-2.5 py-1 rounded bg-white border border-slate-300 text-slate-700 font-bold text-[11px] hover:bg-slate-50 transition">
-                                <i class="fa-solid fa-bolt text-amber-500 text-[10px]"></i> 갱신형 (알뜰 초기할인)
+                            <button type="button" onclick="setAllSelectableRenewal('renewable')" id="btn-global-renew" class="px-2 py-1 rounded bg-white border border-slate-300 text-slate-700 font-bold text-[10.5px] hover:bg-slate-50 transition whitespace-nowrap tracking-tight flex items-center gap-1">
+                                <i class="fa-solid fa-bolt text-amber-500 text-[9px]"></i> <span>갱신형(초기할인)</span>
                             </button>
                         </div>
                     </div>
 
-                    <p class="text-[11px] text-slate-500 leading-relaxed">
-                        • <b>인기 순</b>으로 정렬되며, <b>체크박스</b>로 특약을 넣고 뺄 수 있습니다.<br>
-                        • <span class="text-purple-700 font-bold">[갱신형 전용]</span> 특약은 신의료기술/손해율 위험으로 8대 손보사 모두 갱신형만 가능합니다.<br>
-                        • <span class="text-blue-700 font-bold">[선택 가능]</span> 특약은 <b>비갱신형</b> 또는 <b>갱신형</b>을 소비자가 직접 선택할 수 있습니다.
-                    </p>
+                    <div class="text-[11px] text-slate-500 leading-relaxed break-keep tracking-tight space-y-0.5">
+                        <p>• <b>인기 순</b> 정렬이며, <b>체크박스</b>로 특약을 넣고 뺄 수 있습니다.</p>
+                        <p>• <span class="text-purple-700 font-bold">[갱신형 전용]</span> 특약은 의료기술/손해율 위험으로 8개사 모두 갱신형만 판매합니다.</p>
+                        <p>• <span class="text-blue-700 font-bold">[선택 가능]</span> 특약은 <b>비갱신형</b> 또는 <b>갱신형</b>을 소비자가 직접 선택할 수 있습니다.</p>
+                    </div>
 
                     <div class="space-y-3 max-h-[640px] overflow-y-auto pr-1" id="calc-coverages-container">
                         <!-- JS로 담보 컨트롤러 동적 생성 -->

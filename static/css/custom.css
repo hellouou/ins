@@ -75,3 +75,20 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+
+/* 한국어 시인성 및 단어 단위 줄바꿈 최적화 (한 글자 낙하 방지) */
+* {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+body, button, input, select, textarea {
+    letter-spacing: -0.025em; /* 한국어 타이포그래피 최적 자간 */
+}
+
+/* 갱신/비갱신 버튼, 뱃지, 네비게이션 1줄 가로 정렬 고정 */
+.btn-nowrap, .badge-nowrap, .nav-btn, .plan-btn {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+}
