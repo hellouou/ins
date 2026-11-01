@@ -248,15 +248,15 @@ window.STANDALONE_MASTER = {
     "category": "3대 질병 진단비",
     "recommended_amount": 1000,
     "unit": "만원",
-    "min": 200,
-    "max": 2000,
-    "step": 200,
+    "min": 0,
+    "max": 5000,
+    "step": 100,
     "base_rate_per_1000": 3200,
     "description": "갑상선암, 기타피부암, 제자리암, 경계성종양 각 1회 지급",
+    "tip": "일반암의 10~20% 수준으로 제한되는 경우가 일반적 (보험사별 한도 확인)",
     "group": "암",
     "sub": "진단비",
     "default_on": true,
-    "tip": "일반암의 10~20% 수준으로 제한되는 경우가 일반적 (보험사별 한도 확인)",
     "popularity": 3,
     "renewal_type": "selectable",
     "renewal_cycle": "비갱신(20년납 90세만기) 또는 10/20년 갱신 선택 가능",
@@ -1837,6 +1837,19 @@ window.ClientCalculationEngine = {
       reqCovMap[item.code] = item.amount;
       reqRenewalMap[item.code] = item.renewal_type || 'non_renewable';
     });
+
+    // [유사암 20% 한도 연계] 일반암 + 통합암 가입금액 합산의 최대 20% 자동 보정
+    const genAmt = reqCovMap['cov_cancer_gen'] || 0;
+    const groupAmt = reqCovMap['cov_cancer_group_multi'] || 0;
+    const baseCancer = genAmt + groupAmt;
+    const maxSimLimit = Math.round(baseCancer * 0.20);
+    if (reqCovMap['cov_cancer_sim'] !== undefined) {
+      if (baseCancer <= 0) {
+        reqCovMap['cov_cancer_sim'] = 0;
+      } else if (reqCovMap['cov_cancer_sim'] > maxSimLimit) {
+        reqCovMap['cov_cancer_sim'] = maxSimLimit;
+      }
+    }
 
     const coverageNames = {};
     window.STANDALONE_MASTER.standardCoverages.forEach(c => {
