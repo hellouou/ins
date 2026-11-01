@@ -130,50 +130,90 @@ body, button, input, select, textarea {
     color: var(--input-text) !important;
 }
 
-/* 2. 그레이 모드 (Gray / Soft Slate Mode - 눈이 편안한 저자극 모던 그레이) */
+/* 2. 그레이 모드 (Gray Mode - 확실하고 뚜렷한 리얼 회색 바탕 테마) */
 .theme-gray {
-    --bg-main: #e2e8f0;
-    --bg-card: #f8fafc;
-    --bg-sub: #edf2f7;
-    --border-color: #cbd5e1;
-    --text-primary: #1e293b;
+    --bg-main: #cbd5e1;       /* 눈에 확 띄는 확실한 쿨 그레이 배경 */
+    --bg-card: #e2e8f0;       /* 카드도 흰색이 아닌 선명한 회색 바탕 */
+    --bg-sub: #d1d5db;        /* 보조 컨테이너 그레이 */
+    --border-color: #94a3b8;  /* 테두리도 명확한 다크 그레이 */
+    --text-primary: #0f172a;  /* 진하고 선명한 차콜 텍스트 */
     --text-secondary: #334155;
     --text-muted: #64748b;
-    --input-bg: #ffffff;
-    --input-border: #94a3b8;
+    --input-bg: #f8fafc;
+    --input-border: #64748b;
     --input-text: #0f172a;
 }
 .theme-gray body {
-    background-color: var(--bg-main) !important;
-    color: var(--text-primary) !important;
+    background-color: #cbd5e1 !important;
+    color: #0f172a !important;
 }
+.theme-gray main {
+    background-color: #cbd5e1 !important;
+}
+/* 카드 및 패널 전체 회색 바탕화 (라이트 모드의 화이트와 확실한 차별화) */
 .theme-gray .bg-white {
-    background-color: var(--bg-card) !important;
-    border-color: var(--border-color) !important;
-    color: var(--text-primary) !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    background-color: #e2e8f0 !important;
+    border-color: #94a3b8 !important;
+    color: #0f172a !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
 }
-.theme-gray .bg-slate-50 {
-    background-color: var(--bg-sub) !important;
+.theme-gray .bg-slate-50,
+.theme-gray .bg-slate-100 {
+    background-color: #d1d5db !important;
+    border-color: #94a3b8 !important;
+    color: #1e293b !important;
+}
+/* 특약 세부 상자 및 아코디언 */
+.theme-gray details div.bg-white,
+.theme-gray details div.p-2,
+.theme-gray div[id^="calc-row-"] {
+    background-color: #dbe2ea !important;
+    border-color: #94a3b8 !important;
+}
+.theme-gray details summary {
+    border-color: #94a3b8 !important;
 }
 .theme-gray .border-slate-200,
 .theme-gray .border-slate-300 {
-    border-color: var(--border-color) !important;
+    border-color: #94a3b8 !important;
 }
-.theme-gray .text-slate-800,
-.theme-gray .text-slate-900 {
-    color: var(--text-primary) !important;
+.theme-gray .text-slate-900,
+.theme-gray .text-slate-800 {
+    color: #0f172a !important;
 }
-.theme-gray .text-slate-500,
-.theme-gray .text-slate-600 {
-    color: var(--text-secondary) !important;
+.theme-gray .text-slate-600,
+.theme-gray .text-slate-500 {
+    color: #334155 !important;
 }
+/* 인풋 및 셀렉트 */
 .theme-gray input:not([type="checkbox"]):not([type="radio"]),
 .theme-gray select,
 .theme-gray textarea {
-    background-color: var(--input-bg) !important;
-    border-color: var(--input-border) !important;
-    color: var(--input-text) !important;
+    background-color: #f8fafc !important;
+    border-color: #64748b !important;
+    color: #0f172a !important;
+}
+.theme-gray input:focus,
+.theme-gray select:focus,
+.theme-gray textarea:focus {
+    border-color: #2563eb !important;
+}
+/* 테이블 헤더 및 행 */
+.theme-gray table thead th {
+    background-color: #94a3b8 !important;
+    color: #0f172a !important;
+    border-color: #64748b !important;
+}
+.theme-gray table tbody tr {
+    background-color: #e2e8f0 !important;
+    border-color: #94a3b8 !important;
+}
+.theme-gray table tbody tr:hover {
+    background-color: #d1d5db !important;
+}
+.theme-gray table td {
+    border-color: #94a3b8 !important;
+    color: #0f172a !important;
 }
 
 /* 3. 어두운 테마 모드 (Dark / Deep Navy Mode - 고급 프리미엄 딥 다크) */

@@ -2147,7 +2147,7 @@ function setThemeMode(mode) {
 
     const modeNames = {
         white: { label: '화이트 모드', desc: '밝고 선명한 순백 화면', icon: 'fa-sun text-amber-400' },
-        gray: { label: '그레이 모드', desc: '눈이 편안한 슬레이트 그레이 화면', icon: 'fa-cloud text-slate-300' },
+        gray: { label: '그레이 모드', desc: '눈이 편안한 차분한 회색 바탕 화면', icon: 'fa-cloud text-slate-300' },
         dark: { label: '어두운 테마 모드', desc: '프리미엄 딥 다크 화면', icon: 'fa-moon text-indigo-400' }
     };
     const info = modeNames[mode];
@@ -2190,12 +2190,8 @@ function initThemeMode() {
 // ======================================================================
 
 function copyShareLink() {
-    let shareUrl = 'https://hellouou.github.io/ins/index.html';
-    if (window.location.protocol.startsWith('http') && 
-        !window.location.hostname.includes('localhost') && 
-        !window.location.hostname.includes('127.0.0.1')) {
-        shareUrl = window.location.href;
-    }
+    // [공식 단축 공유 링크] 깃허브 원본 주소를 비노출하고 bit.ly 단축 링크로 고정 복사
+    const shareUrl = 'https://bit.ly/insutop';
 
     function performCopy(text) {
         if (navigator.clipboard && window.isSecureContext) {
@@ -2239,11 +2235,11 @@ function copyShareLink() {
         showToast(`
             <div class="space-y-0.5">
                 <div class="font-extrabold text-sm flex items-center gap-1.5 text-emerald-400">
-                    <i class="fa-solid fa-circle-check"></i> 링크가 클립보드에 복사되었습니다!
+                    <i class="fa-solid fa-circle-check"></i> 공식 공유 링크가 복사되었습니다!
                 </div>
-                <div class="text-[11px] text-slate-300 font-mono break-all">${shareUrl}</div>
-                <div class="text-[10.5px] text-slate-400 mt-1">
-                    카카오톡이나 문자에 바로 <strong>붙여넣기(Ctrl+V)</strong>하여 누구에게나 비교설계 링크를 공유하세요.
+                <div class="text-xs text-amber-300 font-mono font-bold break-all">${shareUrl}</div>
+                <div class="text-[10.5px] text-slate-300 mt-1">
+                    카카오톡이나 문자에 바로 <strong>붙여넣기(Ctrl+V)</strong>하여 고객에게 전달하세요.
                 </div>
             </div>
         `, 'success');
