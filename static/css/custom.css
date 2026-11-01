@@ -92,3 +92,193 @@ body, button, input, select, textarea {
     white-space: nowrap !important;
     word-break: keep-all !important;
 }
+
+/* ======================================================================
+   GA-INSIGHT 3-State Theme Engine (White / Gray / Dark)
+   ====================================================================== */
+
+/* 1. 화이트 모드 (White / Light Mode - 순백의 선명한 금융 포털) */
+.theme-white {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-sub: #f1f5f9;
+    --border-color: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --input-bg: #ffffff;
+    --input-border: #cbd5e1;
+    --input-text: #0f172a;
+}
+.theme-white body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+}
+.theme-white .bg-white {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+.theme-white .bg-slate-50 {
+    background-color: var(--bg-sub) !important;
+}
+.theme-white input:not([type="checkbox"]):not([type="radio"]),
+.theme-white select,
+.theme-white textarea {
+    background-color: var(--input-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--input-text) !important;
+}
+
+/* 2. 그레이 모드 (Gray / Soft Slate Mode - 눈이 편안한 저자극 모던 그레이) */
+.theme-gray {
+    --bg-main: #e2e8f0;
+    --bg-card: #f8fafc;
+    --bg-sub: #edf2f7;
+    --border-color: #cbd5e1;
+    --text-primary: #1e293b;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --input-bg: #ffffff;
+    --input-border: #94a3b8;
+    --input-text: #0f172a;
+}
+.theme-gray body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+}
+.theme-gray .bg-white {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+.theme-gray .bg-slate-50 {
+    background-color: var(--bg-sub) !important;
+}
+.theme-gray .border-slate-200,
+.theme-gray .border-slate-300 {
+    border-color: var(--border-color) !important;
+}
+.theme-gray .text-slate-800,
+.theme-gray .text-slate-900 {
+    color: var(--text-primary) !important;
+}
+.theme-gray .text-slate-500,
+.theme-gray .text-slate-600 {
+    color: var(--text-secondary) !important;
+}
+.theme-gray input:not([type="checkbox"]):not([type="radio"]),
+.theme-gray select,
+.theme-gray textarea {
+    background-color: var(--input-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--input-text) !important;
+}
+
+/* 3. 어두운 테마 모드 (Dark / Deep Navy Mode - 고급 프리미엄 딥 다크) */
+.theme-dark {
+    --bg-main: #0a0e17;
+    --bg-card: #121826;
+    --bg-sub: #182234;
+    --border-color: #222f46;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --input-bg: #0d131f;
+    --input-border: #2b3952;
+    --input-text: #f8fafc;
+}
+.theme-dark body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+}
+.theme-dark .bg-white {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+.theme-dark .bg-slate-50,
+.theme-dark .bg-slate-100 {
+    background-color: var(--bg-sub) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-secondary) !important;
+}
+.theme-dark .border-slate-100,
+.theme-dark .border-slate-200,
+.theme-dark .border-slate-300 {
+    border-color: var(--border-color) !important;
+}
+.theme-dark .text-slate-900,
+.theme-dark .text-slate-800,
+.theme-dark .text-slate-700 {
+    color: var(--text-primary) !important;
+}
+.theme-dark .text-slate-600,
+.theme-dark .text-slate-500 {
+    color: var(--text-secondary) !important;
+}
+.theme-dark .text-slate-400 {
+    color: var(--text-muted) !important;
+}
+
+/* 다크모드 입력창 및 셀렉트 박스 */
+.theme-dark input:not([type="checkbox"]):not([type="radio"]),
+.theme-dark select,
+.theme-dark textarea {
+    background-color: var(--input-bg) !important;
+    border-color: var(--input-border) !important;
+    color: var(--input-text) !important;
+}
+.theme-dark input:focus,
+.theme-dark select:focus,
+.theme-dark textarea:focus {
+    border-color: #38bdf8 !important;
+    outline: none !important;
+}
+
+/* 다크모드 테이블 & 리스트 */
+.theme-dark table thead th {
+    background-color: #162032 !important;
+    color: #e2e8f0 !important;
+    border-color: var(--border-color) !important;
+}
+.theme-dark table tbody tr {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+}
+.theme-dark table tbody tr:hover {
+    background-color: #1a253a !important;
+}
+.theme-dark table td {
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* 다크모드 세부 특약 박스 및 아코디언 */
+.theme-dark details div.bg-white,
+.theme-dark div[id^="calc-row-"] {
+    background-color: #141c2c !important;
+    border-color: #243048 !important;
+}
+.theme-dark details summary {
+    border-color: #243048 !important;
+}
+
+/* 다크모드 상단 헤더 & 모달 */
+.theme-dark header {
+    background-color: #06090f !important;
+    border-color: #172235 !important;
+}
+.theme-dark #print-modal > div,
+.theme-dark .modal-content {
+    background-color: #121826 !important;
+    color: #f8fafc !important;
+    border: 1px solid #222f46 !important;
+}
+
+/* 부드러운 테마 전환 트랜지션 */
+body, .bg-white, .bg-slate-50, input, select, textarea, table, tr, td {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}

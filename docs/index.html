@@ -26,6 +26,14 @@
             }
         }
     </script>
+    <script>
+        (function() {
+            try {
+                var theme = localStorage.getItem('ga_theme_mode') || 'white';
+                document.documentElement.className = 'theme-' + theme;
+            } catch (e) {}
+        })();
+    </script>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
 
@@ -47,9 +55,25 @@
                 </div>
             </div>
 
-            <!-- 우측: 링크 공유 & 엔진 상태 & 설계사 정보 -->
-            <div class="flex items-center space-x-2 sm:space-x-3 text-xs">
-                <button onclick="copyShareLink()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-900 flex items-center gap-1.5 shadow-sm transition transform active:scale-95 cursor-pointer whitespace-nowrap" title="누구나 접속할 수 있는 공유 링크 복사">
+            <!-- 우측: 링크 공유 & 테마 모드 & 엔진 상태 & 설계사 정보 -->
+            <div class="flex items-center space-x-2 sm:space-x-2.5 text-xs">
+                <!-- 테마 모드 3단 선택기 (화이트 / 그레이 / 어두운 테마) -->
+                <div class="inline-flex items-center p-0.5 rounded-lg bg-slate-900 border border-slate-700/80 text-[11px] font-bold shadow-inner" role="group" aria-label="테마 모드 선택">
+                    <button type="button" onclick="setThemeMode('white')" id="btn-theme-white" class="px-2 py-1 rounded-md transition-all flex items-center gap-1 text-slate-300 hover:text-white" title="화이트 모드 (밝고 선명한 화이트 화면)">
+                        <i class="fa-solid fa-sun text-amber-400"></i>
+                        <span class="hidden md:inline">화이트</span>
+                    </button>
+                    <button type="button" onclick="setThemeMode('gray')" id="btn-theme-gray" class="px-2 py-1 rounded-md transition-all flex items-center gap-1 text-slate-300 hover:text-white" title="그레이 모드 (눈이 편안한 슬레이트 그레이 화면)">
+                        <i class="fa-solid fa-cloud text-slate-400"></i>
+                        <span class="hidden md:inline">그레이</span>
+                    </button>
+                    <button type="button" onclick="setThemeMode('dark')" id="btn-theme-dark" class="px-2 py-1 rounded-md transition-all flex items-center gap-1 text-slate-300 hover:text-white" title="어두운 테마 모드 (프리미엄 딥 다크 화면)">
+                        <i class="fa-solid fa-moon text-indigo-400"></i>
+                        <span class="hidden md:inline">다크</span>
+                    </button>
+                </div>
+
+                <button id="btn-header-share" onclick="copyShareLink()" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-900 flex items-center gap-1.5 shadow-sm transition transform active:scale-95 cursor-pointer whitespace-nowrap" title="누구나 접속할 수 있는 공유 링크 복사">
                     <i class="fa-solid fa-share-nodes text-slate-900"></i>
                     <span>링크 복사 (공유)</span>
                 </button>

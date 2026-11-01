@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function initApp() {
+    if (typeof initThemeMode === 'function') initThemeMode();
     try {
         await Promise.all([
             fetchInsurers(),
@@ -698,6 +699,7 @@ function renderCalculatorInputs() {
                 <div class="text-[10px] text-slate-500 leading-snug">${c.description}</div>
                 ${c.tip ? `<div class="text-[10px] text-blue-700/80 leading-snug"><i class="fa-regular fa-lightbulb"></i> ${c.tip}</div>` : ''}
                 ${renewalBadgeAndSelector(c)}
+                ${c.code === 'cov_cancer_sim' ? '<div id="sim-cancer-link-notice" class="transition-all duration-300"></div>' : ''}
             `;
             body.appendChild(row);
         });
@@ -707,6 +709,7 @@ function renderCalculatorInputs() {
 
     // 기본 프리셋 적용
     applyPreset(calcPreset, false);
+    if (typeof syncSimilarCancerAmount === 'function') syncSimilarCancerAmount('init');
 }
 
 // 개별 특약 갱신/비갱신 변경
@@ -770,6 +773,16 @@ function setRider(code, on) {
 function onRiderToggle(code) {
     const chk = document.getElementById(`calc-chk-${code}`);
     setRider(code, chk.checked);
+
+    // [유사암 20% 한도 연동] 일반암/통합암/유사암 상태 변경 시 연동 처리
+    if (typeof syncSimilarCancerAmount === 'function') {
+        if (code === 'cov_cancer_gen' || code === 'cov_cancer_group_multi') {
+            syncSimilarCancerAmount(code === 'cov_cancer_gen' ? 'gen' : 'group');
+        } else if (code === 'cov_cancer_sim') {
+            syncSimilarCancerAmount(chk.checked ? 'sim_chk_on' : 'sim_chk_off');
+        }
+    }
+
     markCustomPreset();
     triggerCalculation();
 }
@@ -778,6 +791,16 @@ function onAmountChange(code) {
     const input = document.getElementById(`calc-amt-${code}`);
     const v = parseInt(input.value) || 0;
     if (v > 0) input.dataset.last = v;
+
+    // [유사암 20% 한도 연동] 금액 변경 시 실시간 연동
+    if (typeof syncSimilarCancerAmount === 'function') {
+        if (code === 'cov_cancer_gen' || code === 'cov_cancer_group_multi') {
+            syncSimilarCancerAmount(code === 'cov_cancer_gen' ? 'gen' : 'group');
+        } else if (code === 'cov_cancer_sim') {
+            syncSimilarCancerAmount('sim_amt');
+        }
+    }
+
     markCustomPreset();
     triggerCalculation();
 }
@@ -787,6 +810,9 @@ function setGroup(group, mode) {
         const on = mode === 'all' ? true : (mode === 'core' ? !!c.default_on : false);
         setRider(c.code, on);
     });
+    if (group === '암' && typeof syncSimilarCancerAmount === 'function') {
+        syncSimilarCancerAmount('group');
+    }
     markCustomPreset();
     triggerCalculation();
 }
@@ -796,6 +822,13 @@ function setCoverageAmount(code, amount) {
     if (input) {
         input.value = amount;
         if (amount > 0) input.dataset.last = amount;
+        if (typeof syncSimilarCancerAmount === 'function') {
+            if (code === 'cov_cancer_gen' || code === 'cov_cancer_group_multi') {
+                syncSimilarCancerAmount(code === 'cov_cancer_gen' ? 'gen' : 'group');
+            } else if (code === 'cov_cancer_sim') {
+                syncSimilarCancerAmount('sim_amt');
+            }
+        }
         markCustomPreset();
         triggerCalculation();
     }
@@ -828,6 +861,8 @@ function applyPreset(preset, recalc = true) {
         input.value = on ? c.recommended_amount : 0;
         input.dataset.last = c.recommended_amount;
     });
+    // 프리셋 적용 시 유사암 20% 한도 일괄 동기화
+    if (typeof syncSimilarCancerAmount === 'function') syncSimilarCancerAmount('preset');
     updatePresetButtons();
     if (recalc) triggerCalculation();
 }
@@ -891,6 +926,7 @@ function onCalcCustomerChange() {
 }
 
 async function triggerCalculation() {
+    if (typeof syncSimilarCancerAmount === 'function') syncSimilarCancerAmount('trigger');
     syncRiderUI();
     const name = document.getElementById('calc-name')?.value || '고객';
     const gender = document.getElementById('calc-gender')?.value || 'M';
@@ -2085,3 +2121,280 @@ function openCaregiverPrintModal() {
     openPrintModal();
 }
 
+
+
+// ======================================================================
+// [1. 화면 테마 모드 관리 엔진 (화이트 / 그레이 / 어두운 테마)]
+// ======================================================================
+
+function setThemeMode(mode) {
+    if (!['white', 'gray', 'dark'].includes(mode)) mode = 'white';
+
+    const root = document.documentElement;
+    const body = document.body;
+
+    root.classList.remove('theme-white', 'theme-gray', 'theme-dark');
+    if (body) body.classList.remove('theme-white', 'theme-gray', 'theme-dark');
+
+    root.classList.add(`theme-${mode}`);
+    if (body) body.classList.add(`theme-${mode}`);
+
+    try {
+        localStorage.setItem('ga_theme_mode', mode);
+    } catch (e) {}
+
+    updateThemeButtonsUI(mode);
+
+    const modeNames = {
+        white: { label: '화이트 모드', desc: '밝고 선명한 순백 화면', icon: 'fa-sun text-amber-400' },
+        gray: { label: '그레이 모드', desc: '눈이 편안한 슬레이트 그레이 화면', icon: 'fa-cloud text-slate-300' },
+        dark: { label: '어두운 테마 모드', desc: '프리미엄 딥 다크 화면', icon: 'fa-moon text-indigo-400' }
+    };
+    const info = modeNames[mode];
+    if (typeof showToast === 'function') {
+        showToast(`
+            <div class="flex items-center gap-2">
+                <i class="fa-solid ${info.icon} text-base"></i>
+                <div>
+                    <span class="font-extrabold text-white text-xs">${info.label} 적용</span>
+                    <span class="block text-[10.5px] text-slate-300">${info.desc}</span>
+                </div>
+            </div>
+        `, 'info');
+    }
+}
+
+function updateThemeButtonsUI(mode) {
+    const modes = ['white', 'gray', 'dark'];
+    modes.forEach(m => {
+        const btn = document.getElementById(`btn-theme-${m}`);
+        if (!btn) return;
+        if (m === mode) {
+            btn.className = "px-2 py-1 rounded-md transition-all flex items-center gap-1 bg-blue-600 text-white font-black shadow-sm text-[11px]";
+        } else {
+            btn.className = "px-2 py-1 rounded-md transition-all flex items-center gap-1 text-slate-400 hover:text-white hover:bg-slate-800 font-semibold text-[11px]";
+        }
+    });
+}
+
+function initThemeMode() {
+    let saved = 'white';
+    try {
+        saved = localStorage.getItem('ga_theme_mode') || 'white';
+    } catch (e) {}
+    setThemeMode(saved);
+}
+
+// ======================================================================
+// [2. 공유 링크 복사 및 세련된 플로팅 토스트 알림 엔진]
+// ======================================================================
+
+function copyShareLink() {
+    let shareUrl = 'https://hellouou.github.io/ins/index.html';
+    if (window.location.protocol.startsWith('http') && 
+        !window.location.hostname.includes('localhost') && 
+        !window.location.hostname.includes('127.0.0.1')) {
+        shareUrl = window.location.href;
+    }
+
+    function performCopy(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text);
+        } else {
+            return new Promise((resolve, reject) => {
+                try {
+                    const tempInput = document.createElement('textarea');
+                    tempInput.value = text;
+                    tempInput.style.position = 'fixed';
+                    tempInput.style.left = '-9999px';
+                    tempInput.style.top = '-9999px';
+                    tempInput.setAttribute('readonly', '');
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    const successful = document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    if (successful) resolve();
+                    else reject(new Error('execCommand failed'));
+                } catch (err) {
+                    reject(err);
+                }
+            });
+        }
+    }
+
+    performCopy(shareUrl).then(() => {
+        const btn = document.getElementById('btn-header-share') || document.querySelector('button[onclick="copyShareLink()"]');
+        if (btn) {
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> <span>링크 복사 완료!</span>';
+            btn.classList.remove('bg-amber-400', 'hover:bg-amber-300', 'text-slate-900');
+            btn.classList.add('bg-emerald-500', 'text-white', 'shadow-md');
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+                btn.classList.remove('bg-emerald-500', 'text-white', 'shadow-md');
+                btn.classList.add('bg-amber-400', 'hover:bg-amber-300', 'text-slate-900');
+            }, 2200);
+        }
+
+        showToast(`
+            <div class="space-y-0.5">
+                <div class="font-extrabold text-sm flex items-center gap-1.5 text-emerald-400">
+                    <i class="fa-solid fa-circle-check"></i> 링크가 클립보드에 복사되었습니다!
+                </div>
+                <div class="text-[11px] text-slate-300 font-mono break-all">${shareUrl}</div>
+                <div class="text-[10.5px] text-slate-400 mt-1">
+                    카카오톡이나 문자에 바로 <strong>붙여넣기(Ctrl+V)</strong>하여 누구에게나 비교설계 링크를 공유하세요.
+                </div>
+            </div>
+        `, 'success');
+    }).catch(err => {
+        window.prompt('아래 링크를 복사(Ctrl+C)하여 고객에게 전달하세요:', shareUrl);
+    });
+}
+
+function showToast(htmlContent, type = 'info') {
+    let container = document.getElementById('global-toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'global-toast-container';
+        container.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] flex flex-col items-center gap-2 pointer-events-none max-w-md w-full px-4';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    const borderCls = type === 'success' ? 'border-emerald-500/60' : (type === 'warning' ? 'border-amber-500/60' : 'border-blue-500/60');
+    toast.className = `pointer-events-auto bg-slate-900/95 text-white px-4 py-3 rounded-xl border ${borderCls} shadow-2xl backdrop-blur-md text-xs transition-all duration-300 opacity-0 translate-y-3 w-full`;
+    toast.innerHTML = htmlContent;
+
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.remove('opacity-0', 'translate-y-3');
+        toast.classList.add('opacity-100', 'translate-y-0');
+    });
+
+    setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-3');
+        setTimeout(() => {
+            if (toast.parentElement) toast.parentElement.removeChild(toast);
+        }, 300);
+    }, 3500);
+}
+
+// ======================================================================
+// [3. 유사암 20% 한도 자동 연동 엔진 (일반암 + 통합암 합산 규정)]
+// ======================================================================
+
+function syncSimilarCancerAmount(triggerSource = 'auto') {
+    const genInput = document.getElementById('calc-amt-cov_cancer_gen');
+    const genChk = document.getElementById('calc-chk-cov_cancer_gen');
+    const groupInput = document.getElementById('calc-amt-cov_cancer_group_multi');
+    const groupChk = document.getElementById('calc-chk-cov_cancer_group_multi');
+    const simInput = document.getElementById('calc-amt-cov_cancer_sim');
+    const simChk = document.getElementById('calc-chk-cov_cancer_sim');
+
+    if (!simInput || !simChk) return;
+
+    const genChecked = genChk ? genChk.checked : ((parseInt(genInput?.value) || 0) > 0);
+    const genAmt = genChecked ? (parseInt(genInput?.value) || 0) : 0;
+
+    const groupChecked = groupChk ? groupChk.checked : ((parseInt(groupInput?.value) || 0) > 0);
+    const groupAmt = groupChecked ? (parseInt(groupInput?.value) || 0) : 0;
+
+    const baseCancerAmount = genAmt + groupAmt;
+    const maxSimilarLimit = Math.round(baseCancerAmount * 0.20);
+
+    updateSimilarCancerNoticeUI(baseCancerAmount, maxSimilarLimit, genAmt, groupAmt, genChecked, groupChecked);
+
+    if (baseCancerAmount <= 0) {
+        simInput.value = 0;
+        simInput.dataset.last = 0;
+        simInput.max = 0;
+        simChk.checked = false;
+        const row = document.getElementById('calc-row-cov_cancer_sim');
+        if (row) row.classList.add('opacity-50');
+        return;
+    }
+
+    simInput.max = maxSimilarLimit;
+
+    if (triggerSource === 'sim_amt') {
+        let userVal = parseInt(simInput.value) || 0;
+        if (userVal > maxSimilarLimit) {
+            simInput.value = maxSimilarLimit;
+            userVal = maxSimilarLimit;
+            alertSimilarCancerLimit(baseCancerAmount, maxSimilarLimit);
+        }
+        simInput.dataset.last = userVal;
+        simChk.checked = userVal > 0;
+        const row = document.getElementById('calc-row-cov_cancer_sim');
+        if (row) row.classList.toggle('opacity-50', userVal <= 0);
+    } else if (triggerSource === 'sim_chk_off') {
+        simInput.value = 0;
+        simChk.checked = false;
+        const row = document.getElementById('calc-row-cov_cancer_sim');
+        if (row) row.classList.add('opacity-50');
+    } else {
+        simInput.value = maxSimilarLimit;
+        simInput.dataset.last = maxSimilarLimit;
+        simChk.checked = true;
+        const row = document.getElementById('calc-row-cov_cancer_sim');
+        if (row) row.classList.remove('opacity-50');
+    }
+}
+
+function updateSimilarCancerNoticeUI(base, limit, genAmt, groupAmt, genOn, groupOn) {
+    let noticeEl = document.getElementById('sim-cancer-link-notice');
+    const simRow = document.getElementById('calc-row-cov_cancer_sim');
+    if (!simRow) return;
+
+    if (!noticeEl) {
+        noticeEl = document.createElement('div');
+        noticeEl.id = 'sim-cancer-link-notice';
+        simRow.appendChild(noticeEl);
+    }
+
+    if (base > 0) {
+        const parts = [];
+        if (genAmt > 0) parts.push(`일반암 ${genAmt.toLocaleString()}만`);
+        if (groupAmt > 0) parts.push(`통합암 ${groupAmt.toLocaleString()}만`);
+        const formulaStr = parts.join(' + ') + ` = 기준 <strong>${base.toLocaleString()}만원</strong>`;
+
+        noticeEl.className = "mt-2 p-2 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-900 text-[11px] leading-relaxed shadow-sm transition-all";
+        noticeEl.innerHTML = `
+            <div class="flex items-center gap-1.5 font-bold text-emerald-800">
+                <i class="fa-solid fa-link text-emerald-600"></i>
+                <span>유사암 20% 한도 연동 활성화</span>
+                <span class="ml-auto px-1.5 py-0.5 rounded bg-emerald-200 text-emerald-900 text-[10px] font-extrabold">20% 한도 자동연계</span>
+            </div>
+            <div class="mt-1 text-slate-700 text-[10.5px]">
+                ${formulaStr}의 20% 한도인 <strong class="text-emerald-900 bg-emerald-100 px-1 py-0.5 rounded font-black border border-emerald-200">${limit.toLocaleString()}만원</strong>이 자동 설정되었습니다.
+            </div>
+            <div class="text-[10px] text-emerald-700 mt-1 flex items-center gap-1 font-medium">
+                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                <span>한 상품 내 일반암·통합암 동시 가입 시 합산 기준(20%)으로 유사암 한도가 자동 확대 적용됩니다.</span>
+            </div>
+        `;
+    } else {
+        noticeEl.className = "mt-2 p-2 rounded-lg bg-amber-50 border border-amber-300 text-amber-900 text-[11px] leading-relaxed transition-all";
+        noticeEl.innerHTML = `
+            <div class="flex items-center gap-1.5 font-bold text-amber-800">
+                <i class="fa-solid fa-circle-exclamation text-amber-600"></i>
+                <span>유사암 한도 연계 대기</span>
+            </div>
+            <div class="mt-0.5 text-slate-700 text-[10.5px]">
+                유사암은 보험사 공통 규정상 <strong>일반암 또는 통합암 가입금액의 20%</strong> 내에서만 가입할 수 있습니다. 위 일반암이나 통합암을 선택해 주세요.
+            </div>
+        `;
+    }
+}
+
+function alertSimilarCancerLimit(base, limit) {
+    const msg = `[유사암 한도 안내] 유사암은 일반암+통합암(${base.toLocaleString()}만원)의 최대 20%인 ${limit.toLocaleString()}만원까지만 가입 가능합니다.`;
+    if (typeof showToast === 'function') {
+        showToast(msg);
+    } else {
+        console.warn(msg);
+    }
+}
