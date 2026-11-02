@@ -6,33 +6,228 @@
     <title>경제·증시 & 네이버 뉴스스탠드 3대 언론사 심층 브리핑</title>
     <!-- OpenGraph 메타 태그 (카카오톡, 문자 공유 시 공식 단축링크와 함께 예쁜 카드 제공) -->
     <meta property="og:title" content="📊 일일 경제·증시 & 신문 1면 모닝 브리핑">
-    <meta property="og:description" content="미국 나스닥 지수가 1% 이상 하락하며 기술주 중심의 차익 실현 및 경계 심리가 부각되었습니다. 원/달러 환율은 1,344.38원 수준을 기록하고 있습니다. 국제 유가(WTI)가 -5.61% 급락세를 보였습니다.">
+    <meta property="og:description" content="미국 나스닥 지수가 1% 이상 하락하며 기술주 중심의 차익 실현 및 경계 심리가 부각되었습니다. 원/달러 환율은 1,344.61원 수준을 기록하고 있습니다. 국제 유가(WTI)가 -5.41% 급락세를 보였습니다.">
     <meta property="og:url" content="https://tr.ee/Z51VtU">
     <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/static/pretendard.min.css">
-    <style>body { font-family: 'Pretendard', sans-serif; }</style>
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('briefing_theme_mode') || 'light';
+                document.documentElement.setAttribute('data-theme', saved);
+            } catch(e) {}
+        })();
+    </script>
+    <style>
+        body { font-family: 'Pretendard', sans-serif; }
+
+        /* 테마별 색상 변수 설정 */
+        :root, [data-theme="light"] {
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --border-card: #e2e8f0;
+            --border-subtle: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --bg-inner-news: #f8fafc;
+            --border-inner-news: #e2e8f0;
+            --bg-inner-opinion: #fffbeb;
+            --border-inner-opinion: #fef3c7;
+            --text-inner-opinion: #78350f;
+            --bg-switcher: #e2e8f0;
+            --border-switcher: #cbd5e1;
+            --btn-inactive-text: #64748b;
+            --btn-active-bg: #ffffff;
+            --btn-active-text: #0f172a;
+            --btn-active-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            --btn-secondary-bg: #f1f5f9;
+            --btn-secondary-text: #334155;
+            --btn-secondary-border: #e2e8f0;
+            --btn-info-bg: #eff6ff;
+            --btn-info-text: #2563eb;
+        }
+
+        [data-theme="gray"] {
+            --bg-page: #c9ced6;             /* 확실한 회색 바탕 */
+            --bg-card: #e5e9f0;             /* 부드러운 카드 회색 */
+            --border-card: #b0b8c4;
+            --border-subtle: #cbd2dc;
+            --text-primary: #111827;
+            --text-secondary: #374151;
+            --text-muted: #6b7280;
+            --bg-inner-news: #dbe0e8;
+            --border-inner-news: #c2c9d4;
+            --bg-inner-opinion: #f3ede2;
+            --border-inner-opinion: #dfd4c0;
+            --text-inner-opinion: #713f12;
+            --bg-switcher: #b4bcc8;
+            --border-switcher: #9ba4b2;
+            --btn-inactive-text: #374151;
+            --btn-active-bg: #ffffff;
+            --btn-active-text: #111827;
+            --btn-active-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            --btn-secondary-bg: #dbe0e8;
+            --btn-secondary-text: #1f2937;
+            --btn-secondary-border: #b0b8c4;
+            --btn-info-bg: #dbeafe;
+            --btn-info-text: #1d4ed8;
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #0b0f17;             /* 딥 다크 바탕 */
+            --bg-card: #151d2c;             /* 다크 카드 */
+            --border-card: #283548;
+            --border-subtle: #1f293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #8292a6;
+            --bg-inner-news: #0d1422;
+            --border-inner-news: #283548;
+            --bg-inner-opinion: #1f1b16;
+            --border-inner-opinion: #3e2f1c;
+            --text-inner-opinion: #fde68a;
+            --bg-switcher: #1f293b;
+            --border-switcher: #334155;
+            --btn-inactive-text: #94a3b8;
+            --btn-active-bg: #38bdf8;
+            --btn-active-text: #0b0f17;
+            --btn-active-shadow: 0 2px 6px rgba(56,189,248,0.3);
+            --btn-secondary-bg: #1e293b;
+            --btn-secondary-text: #e2e8f0;
+            --btn-secondary-border: #334155;
+            --btn-info-bg: #1e3a5f;
+            --btn-info-text: #93c5fd;
+        }
+
+        /* 스타일 매핑 */
+        body {
+            background-color: var(--bg-page) !important;
+            color: var(--text-secondary);
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+        .theme-card {
+            background-color: var(--bg-card) !important;
+            border-color: var(--border-card) !important;
+            color: var(--text-secondary);
+            transition: background-color 0.25s ease, border-color 0.25s ease;
+        }
+        .theme-border-subtle {
+            border-color: var(--border-subtle) !important;
+        }
+        .theme-title {
+            color: var(--text-primary) !important;
+        }
+        .theme-subtitle {
+            color: var(--text-muted) !important;
+        }
+        .theme-content {
+            color: var(--text-secondary) !important;
+        }
+        .theme-news-row {
+            background-color: var(--bg-inner-news) !important;
+            border-color: var(--border-inner-news) !important;
+        }
+        .theme-opinion-row {
+            background-color: var(--bg-inner-opinion) !important;
+            border-color: var(--border-inner-opinion) !important;
+        }
+        .theme-opinion-text {
+            color: var(--text-inner-opinion) !important;
+        }
+        .theme-btn-secondary {
+            background-color: var(--btn-secondary-bg) !important;
+            color: var(--btn-secondary-text) !important;
+            border-color: var(--btn-secondary-border) !important;
+        }
+        .theme-btn-info {
+            background-color: var(--btn-info-bg) !important;
+            color: var(--btn-info-text) !important;
+        }
+        .theme-switcher-container {
+            background-color: var(--bg-switcher);
+            border-color: var(--border-switcher);
+        }
+        .theme-pill-btn {
+            color: var(--btn-inactive-text);
+            cursor: pointer;
+            user-select: none;
+        }
+        .theme-pill-btn:hover {
+            opacity: 0.9;
+        }
+        .theme-pill-btn.active {
+            background-color: var(--btn-active-bg) !important;
+            color: var(--btn-active-text) !important;
+            box-shadow: var(--btn-active-shadow);
+        }
+
+        [data-theme="dark"] .bg-rose-50 {
+            background-color: rgba(225, 29, 72, 0.15) !important;
+            border-color: rgba(225, 29, 72, 0.4) !important;
+            color: #fda4af !important;
+        }
+        [data-theme="dark"] .bg-blue-50 {
+            background-color: rgba(37, 99, 235, 0.15) !important;
+            border-color: rgba(37, 99, 235, 0.4) !important;
+            color: #93c5fd !important;
+        }
+        [data-theme="dark"] .bg-gray-50 {
+            background-color: rgba(148, 163, 184, 0.15) !important;
+            border-color: rgba(148, 163, 184, 0.3) !important;
+            color: #cbd5e1 !important;
+        }
+        [data-theme="gray"] .bg-rose-50 {
+            background-color: #fee2e2 !important;
+            border-color: #fca5a5 !important;
+        }
+        [data-theme="gray"] .bg-blue-50 {
+            background-color: #dbeafe !important;
+            border-color: #bfdbfe !important;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-gray-800 min-h-screen p-4 sm:p-8">
-    <div class="max-w-5xl mx-auto space-y-6">
+<body class="bg-slate-50 text-gray-800 min-h-screen p-3 sm:p-8">
+    <div class="max-w-5xl mx-auto space-y-5">
+        <!-- 맨 상단 우측: 테마 선택 (라이트모드, 그레이모드, 다크모드 둥근 버튼 3개) -->
+        <div class="flex items-center justify-between pb-1">
+            <div class="flex items-center gap-2 text-xs font-semibold theme-subtitle">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="font-bold">DAILY BRIEFING</span>
+            </div>
+            <!-- 맨 상단 우측 둥근 버튼 3개 -->
+            <div class="inline-flex p-1 rounded-full theme-switcher-container border shadow-sm items-center gap-1">
+                <button type="button" onclick="setTheme('light')" id="btn-theme-light" class="theme-pill-btn rounded-full px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 transition active:scale-95" title="라이트모드">
+                    <span>☀️</span><span>라이트<span class="hidden sm:inline">모드</span></span>
+                </button>
+                <button type="button" onclick="setTheme('gray')" id="btn-theme-gray" class="theme-pill-btn rounded-full px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 transition active:scale-95" title="그레이모드(회색바탕)">
+                    <span>🩶</span><span>그레이<span class="hidden sm:inline">모드</span></span>
+                </button>
+                <button type="button" onclick="setTheme('dark')" id="btn-theme-dark" class="theme-pill-btn rounded-full px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 transition active:scale-95" title="다크모드">
+                    <span>🌙</span><span>다크<span class="hidden sm:inline">모드</span></span>
+                </button>
+            </div>
+        </div>
+
         <!-- Header -->
-        <header class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <header class="theme-card bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <div class="flex items-center gap-2">
                     <span class="text-2xl">📈</span>
-                    <h1 class="text-2xl font-bold text-gray-900">경제·증시 & 언론사 1면 심층 브리핑</h1>
+                    <h1 class="text-2xl font-bold theme-title text-gray-900">경제·증시 & 언론사 1면 심층 브리핑</h1>
                 </div>
-                <p class="text-xs text-gray-500 mt-1">기준 시각: 2026-11-03 00:22 KST | 출처: 네이버 뉴스스탠드 (경향 · 한경 · 매경 1면)</p>
+                <p class="text-xs theme-subtitle text-gray-500 mt-1">기준 시각: 2026-11-03 00:28 KST | 출처: 네이버 뉴스스탠드 (경향 · 한경 · 매경 1면)</p>
             </div>
             <!-- 공유 & 다운로드 버튼군 -->
             <div class="flex flex-wrap items-center gap-2">
                 <button onclick="shareLink()" class="px-3.5 py-2 text-xs font-bold bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition flex items-center gap-1.5 shadow-sm active:scale-95">
                     <span>💬</span> <span>공유하기</span>
                 </button>
-                <button onclick="copyLink()" class="px-3.5 py-2 text-xs font-semibold bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition flex items-center gap-1.5 border border-gray-200 active:scale-95">
+                <button onclick="copyLink()" class="theme-btn-secondary px-3.5 py-2 text-xs font-semibold bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition flex items-center gap-1.5 border border-gray-200 active:scale-95">
                     <span>🔗</span> <span>링크 복사</span>
                 </button>
-                <a href="./latest_briefing.md" target="_blank" class="px-3.5 py-2 text-xs font-semibold bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition">
+                <a href="./latest_briefing.md" target="_blank" class="theme-btn-info px-3.5 py-2 text-xs font-semibold bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition">
                     마크다운 보기
                 </a>
             </div>
@@ -41,77 +236,77 @@
         <!-- Summary Banner -->
         <div class="bg-gradient-to-r from-slate-900 via-indigo-900 to-blue-900 text-white rounded-2xl p-6 shadow-md">
             <div class="text-xs font-bold uppercase tracking-wider text-blue-300 mb-1">Morning Market Insight</div>
-            <p class="text-base sm:text-lg font-medium leading-relaxed">미국 나스닥 지수가 1% 이상 하락하며 기술주 중심의 차익 실현 및 경계 심리가 부각되었습니다. 원/달러 환율은 1,344.38원 수준을 기록하고 있습니다. 국제 유가(WTI)가 -5.61% 급락세를 보였습니다.</p>
+            <p class="text-base sm:text-lg font-medium leading-relaxed">미국 나스닥 지수가 1% 이상 하락하며 기술주 중심의 차익 실현 및 경계 심리가 부각되었습니다. 원/달러 환율은 1,344.61원 수준을 기록하고 있습니다. 국제 유가(WTI)가 -5.41% 급락세를 보였습니다.</p>
         </div>
 
         <!-- Global Market -->
         <section>
-            <h2 class="text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <h2 class="text-base font-bold theme-title text-gray-800 mb-3 flex items-center gap-2">
                 <span>🌐</span> 미국 및 글로벌 주요 지수
             </h2>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">^DJI</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">^DJI</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
-                    ▲ +0.04%
+                    ▲ +0.08%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">다우 존스</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                52,384.57 <span class="text-xs font-normal text-gray-500">pt</span>
+            <div class="text-sm font-medium theme-title text-gray-700">다우 존스</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                52,402.52 <span class="text-xs font-normal theme-subtitle text-gray-500">pt</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 +22.99
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 +40.94
             </div>
         </div>
         
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">^GSPC</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">^GSPC</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -0.28%
+                    ▼ -0.20%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">S&P 500</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                7,655.57 <span class="text-xs font-normal text-gray-500">pt</span>
+            <div class="text-sm font-medium theme-title text-gray-700">S&P 500</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                7,661.56 <span class="text-xs font-normal theme-subtitle text-gray-500">pt</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 -21.20
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 -15.21
             </div>
         </div>
         
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">^IXIC</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">^IXIC</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -1.56%
+                    ▼ -1.42%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">나스닥</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                25,759.85 <span class="text-xs font-normal text-gray-500">pt</span>
+            <div class="text-sm font-medium theme-title text-gray-700">나스닥</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                25,797.11 <span class="text-xs font-normal theme-subtitle text-gray-500">pt</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 -409.53
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 -372.27
             </div>
         </div>
         
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">^SOX</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">^SOX</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -2.37%
+                    ▼ -1.81%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">필라델피아 반도체</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                10,820.53 <span class="text-xs font-normal text-gray-500">pt</span>
+            <div class="text-sm font-medium theme-title text-gray-700">필라델피아 반도체</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                10,883.00 <span class="text-xs font-normal theme-subtitle text-gray-500">pt</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 -262.94
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 -200.47
             </div>
         </div>
         
@@ -120,39 +315,39 @@
 
         <!-- Domestic Market -->
         <section>
-            <h2 class="text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <h2 class="text-base font-bold theme-title text-gray-800 mb-3 flex items-center gap-2">
                 <span>🇰🇷</span> 국내 증시 (전일 마감)
             </h2>
             <div class="grid grid-cols-2 gap-3">
                 
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">^KS11</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">^KS11</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
                     ▲ +7.12%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">코스피</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                5,859.08 <span class="text-xs font-normal text-gray-500">pt</span>
+            <div class="text-sm font-medium theme-title text-gray-700">코스피</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                5,859.08 <span class="text-xs font-normal theme-subtitle text-gray-500">pt</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
                 전일비 +389.61
             </div>
         </div>
         
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">^KQ11</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">^KQ11</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
                     ▲ +0.98%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">코스닥</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                734.36 <span class="text-xs font-normal text-gray-500">pt</span>
+            <div class="text-sm font-medium theme-title text-gray-700">코스닥</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                734.36 <span class="text-xs font-normal theme-subtitle text-gray-500">pt</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
                 전일비 +7.15
             </div>
         </div>
@@ -162,88 +357,88 @@
 
         <!-- Macro & Crypto -->
         <section>
-            <h2 class="text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <h2 class="text-base font-bold theme-title text-gray-800 mb-3 flex items-center gap-2">
                 <span>💵</span> 환율 · 원자재 · 금리 · 가상자산
             </h2>
             <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
                 
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">KRW=X</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">KRW=X</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
-                    ▲ +1.48%
+                    ▲ +1.50%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">원/달러 환율</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                1,344.38 <span class="text-xs font-normal text-gray-500">원</span>
+            <div class="text-sm font-medium theme-title text-gray-700">원/달러 환율</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                1,344.61 <span class="text-xs font-normal theme-subtitle text-gray-500">원</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 +19.61
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 +19.84
             </div>
         </div>
         
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">CL=F</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">CL=F</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -5.61%
+                    ▼ -5.41%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">WTI 국제유가</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                97.01 <span class="text-xs font-normal text-gray-500">달러</span>
+            <div class="text-sm font-medium theme-title text-gray-700">WTI 국제유가</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                97.22 <span class="text-xs font-normal theme-subtitle text-gray-500">달러</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 -5.77
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 -5.56
             </div>
         </div>
         
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">GC=F</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">GC=F</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -2.05%
+                    ▼ -2.00%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">금 선물</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                3,968.50 <span class="text-xs font-normal text-gray-500">달러</span>
+            <div class="text-sm font-medium theme-title text-gray-700">금 선물</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                3,970.50 <span class="text-xs font-normal theme-subtitle text-gray-500">달러</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 -83.10
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 -81.10
             </div>
         </div>
         
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">^TNX</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">^TNX</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -2.18%
+                    ▼ -2.02%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">미국 10년물 국채금리</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                4.88 <span class="text-xs font-normal text-gray-500">%</span>
+            <div class="text-sm font-medium theme-title text-gray-700">미국 10년물 국채금리</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                4.89 <span class="text-xs font-normal theme-subtitle text-gray-500">%</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 -0.11
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 -0.10
             </div>
         </div>
         
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
+        <div class="theme-card bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
-                <span class="text-xs font-semibold text-gray-400">BTC-USD</span>
+                <span class="text-xs font-semibold theme-subtitle text-gray-400">BTC-USD</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
-                    ▲ +0.02%
+                    ▲ +0.08%
                 </span>
             </div>
-            <div class="text-sm font-medium text-gray-700">비트코인</div>
-            <div class="text-xl font-bold text-gray-900 mt-1">
-                77,790.74 <span class="text-xs font-normal text-gray-500">달러</span>
+            <div class="text-sm font-medium theme-title text-gray-700">비트코인</div>
+            <div class="text-xl font-bold theme-title text-gray-900 mt-1">
+                77,835.59 <span class="text-xs font-normal theme-subtitle text-gray-500">달러</span>
             </div>
-            <div class="text-xs text-gray-400 mt-1">
-                전일비 +15.63
+            <div class="text-xs theme-subtitle text-gray-400 mt-1">
+                전일비 +60.48
             </div>
         </div>
         
@@ -252,304 +447,304 @@
 
         <!-- Press Section (Kyunghyang, Hankyung, Maekyung from Naver Newsstand) -->
         <section class="space-y-4">
-            <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2 pt-2">
+            <h2 class="text-lg font-bold theme-title text-gray-900 flex items-center gap-2 pt-2">
                 <span>🗞️</span> 오늘자 네이버 뉴스스탠드 1면 전면 기사 & 사설 분석
             </h2>
             
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4">
-            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="theme-card bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 theme-border-subtle">
                 <div class="flex items-center gap-2">
                     <span class="px-2.5 py-1 text-xs font-bold text-white rounded-md bg-blue-600">경향신문</span>
-                    <span class="text-sm font-bold text-gray-800">네이버 뉴스스탠드 1면 전면 기사 & 사설</span>
+                    <span class="text-sm font-bold theme-title text-gray-800">네이버 뉴스스탠드 1면 전면 기사 & 사설</span>
                 </div>
-                <a href="https://newsstand.naver.com/" target="_blank" class="text-xs text-gray-400 hover:text-blue-600">
+                <a href="https://newsstand.naver.com/" target="_blank" class="text-xs theme-subtitle text-gray-400 hover:text-blue-500">
                     뉴스스탠드 원문 ↗
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-3">
-                    <div class="text-xs font-bold text-gray-500 flex items-center gap-1.5">
+                    <div class="text-xs font-bold theme-subtitle text-gray-500 flex items-center gap-1.5">
                         <span>📰</span> 첫 화면 맨 앞면 기사 (헤드라인 · 소제목 · 주요내용)
                     </div>
                     
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="px-1.5 py-0.5 text-[10px] font-bold bg-rose-600 text-white rounded">1면 톱</span>
-                    <a href="https://www.khan.co.kr/article/202611021744001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.khan.co.kr/article/202611021744001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         [뉴스분석] ‘역차별론’ 꺼내며 PC주의 논쟁 한복판 선 대통령…비판에 ‘내로남불’ 일일이 반박
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">점선면</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">이재명 대통령이 다문화 가정 지원 정책의 ‘내국인 역차별’ 가능성을 제기하며 소수자 지원 정책을 둘러싼 공정성 논쟁을 주도하고 있다. 과거 ‘남성 차별’ 문제를 거론한 데서 나아가 최근에는 외국인 노동자와 다문화 가정 지원 정책까지 역차별·불공정 프레임을 확대한 것으로 풀이된다. 자신에 대한 비판을 ‘PC주의(정치적 올바름)에 근거한 내로남불’로 규정하며 진보 진영과 공방도 이어가고 있다. 일부 전문가들은 이 대통령이 갈라치기 정치에 편승했을 뿐 아니라, 누리꾼과 언론 비판에 일일이 맞대응하면서 ...</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">점선면</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">이재명 대통령이 다문화 가정 지원 정책의 ‘내국인 역차별’ 가능성을 제기하며 소수자 지원 정책을 둘러싼 공정성 논쟁을 주도하고 있다. 과거 ‘남성 차별’ 문제를 거론한 데서 나아가 최근에는 외국인 노동자와 다문화 가정 지원 정책까지 역차별·불공정 프레임을 확대한 것으로 풀이된다. 자신에 대한 비판을 ‘PC주의(정치적 올바름)에 근거한 내로남불’로 규정하며 진보 진영과 공방도 이어가고 있다. 일부 전문가들은 이 대통령이 갈라치기 정치에 편승했을 뿐 아니라, 누리꾼과 언론 비판에 일일이 맞대응하면서 ...</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">2</span>
-                    <a href="https://www.khan.co.kr/article/202611022228001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.khan.co.kr/article/202611022228001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         청와대, 이 대통령 등 공군 1호기 탑승자 여권번호 노출에 “사전 인지 후 대응 조치 취해”
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">점선면</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">이재명 대통령과 김혜경 여사의 생년월일과 여권번호 등 대통령 전용기인 공군 1호기 탑승자의 개인정보가 담긴 엑셀파일이 악성코드를 검사해주는 유료 웹사이트에 수개월간 노출됐던 것으로 알려졌다. 청와대는 이 대통령 등 고위공직자의 개인정보 유출을 두고 “사전 인지 후 대응 조치를 취했으며, 앞으로 외교부 등에서 추가 조치를 할 예정”이라고 밝혔다. 2일 KBS 보도를 보면, 올해 6월 악성코드 검사 웹사이트에는 ‘1호기 탑승자 명단(총 168명)’이라는 엑셀 파일이 올라왔다. 엑셀 파일의 가장 윗줄에...</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">점선면</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">이재명 대통령과 김혜경 여사의 생년월일과 여권번호 등 대통령 전용기인 공군 1호기 탑승자의 개인정보가 담긴 엑셀파일이 악성코드를 검사해주는 유료 웹사이트에 수개월간 노출됐던 것으로 알려졌다. 청와대는 이 대통령 등 고위공직자의 개인정보 유출을 두고 “사전 인지 후 대응 조치를 취했으며, 앞으로 외교부 등에서 추가 조치를 할 예정”이라고 밝혔다. 2일 KBS 보도를 보면, 올해 6월 악성코드 검사 웹사이트에는 ‘1호기 탑승자 명단(총 168명)’이라는 엑셀 파일이 올라왔다. 엑셀 파일의 가장 윗줄에...</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">3</span>
-                    <a href="https://www.khan.co.kr/article/202611022144001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.khan.co.kr/article/202611022144001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         경찰, ‘이재명 혼외자설’ ‘5·18 북한 개입설’ 전한길 송치···명예훼손·5·18 특별법 위반 등 혐의
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">점선면</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">‘이재명 대통령 혼외자설’, ‘5·18 북한 개입설’ 등 허위사실을 유포한 혐의로 수사를 받아온 극우 성향 유튜버 전한길씨가 공소청에 넘겨졌다. 2일 경향신문 취재를 종합하면, 서울경찰청 광역수사단 광역범죄수사대는 정보통신망법상 명예훼손·허위사실 유포, 전기통신기본법 위반, 5·18민주화운동특별법 위반 혐의 등을 받는 전씨를 지난달 30일 서울중앙지방공소청에 송치했다.</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">점선면</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">‘이재명 대통령 혼외자설’, ‘5·18 북한 개입설’ 등 허위사실을 유포한 혐의로 수사를 받아온 극우 성향 유튜버 전한길씨가 공소청에 넘겨졌다. 2일 경향신문 취재를 종합하면, 서울경찰청 광역수사단 광역범죄수사대는 정보통신망법상 명예훼손·허위사실 유포, 전기통신기본법 위반, 5·18민주화운동특별법 위반 혐의 등을 받는 전씨를 지난달 30일 서울중앙지방공소청에 송치했다.</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">4</span>
-                    <a href="https://www.khan.co.kr/article/202611021853001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.khan.co.kr/article/202611021853001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         [단독]현직 부장판사 “여권, 헌법상 권한 남용하면 내란 우두머리와 무엇이 다른가”···대법원장 국정조사 반발
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">점선면</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">현직 부장판사가 조희대 대법원장의 탄핵논의와 국정조사 등을 추진하는 여권에 대해 “헌법상 권한을 남용한다면 있지도 않은 반국가세력을 핑계로 계엄을 선포한 내란 우두머리와 다를 것이 무엇이냐”고 반발했다. 정욱도 서울북부지법 부장판사는 2일 법원 내부망(코트넷)에 “여권 관계자분들께”라는 제목의 글을 올리고 이같이 밝혔다.</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">점선면</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">현직 부장판사가 조희대 대법원장의 탄핵논의와 국정조사 등을 추진하는 여권에 대해 “헌법상 권한을 남용한다면 있지도 않은 반국가세력을 핑계로 계엄을 선포한 내란 우두머리와 다를 것이 무엇이냐”고 반발했다. 정욱도 서울북부지법 부장판사는 2일 법원 내부망(코트넷)에 “여권 관계자분들께”라는 제목의 글을 올리고 이같이 밝혔다.</p>
             </div>
             
                 </div>
                 <div class="space-y-3">
-                    <div class="text-xs font-bold text-amber-700 flex items-center gap-1.5">
+                    <div class="text-xs font-bold text-amber-600 flex items-center gap-1.5">
                         <span>✍️</span> 오피니언 & 사설 핵심 요약
                     </div>
                     
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 1</span>
-                    <a href="https://www.khan.co.kr/article/202611021923001" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.khan.co.kr/article/202611021923001" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         [사설]말뿐인 ‘모두의 성장’ 안되려면 양극화 해소 예산 강화해야
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">내년도 예산안에 대한 국회 심사가 2일 이재명 대통령의 시정연설과 함께 시작됐다. 새해 예산안은 반도체 호황에 따른 세수 증가로 올해보다 12.8% 늘어난 820조9000억원의 사상 최대 규모로 편성됐고, 신설된 미래대응기금이 그중 약 20%를 차지할 만큼 규모가 크다. 미래 성장동력을 확보하고 어려운 민생을 살피기 위한 확장재정은 불가피한 측면이 있...</p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">내년도 예산안에 대한 국회 심사가 2일 이재명 대통령의 시정연설과 함께 시작됐다. 새해 예산안은 반도체 호황에 따른 세수 증가로 올해보다 12.8% 늘어난 820조9000억원의 사상 최대 규모로 편성됐고, 신설된 미래대응기금이 그중 약 20%를 차지할 만큼 규모가 크다. 미래 성장동력을 확보하고 어려운 민생을 살피기 위한 확장재정은 불가피한 측면이 있...</p>
             </div>
             
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 2</span>
-                    <a href="https://www.khan.co.kr/article/202611021828001" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.khan.co.kr/article/202611021828001" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         [사설]형사사법체계 개편 한 달, 증거 제출 혼선부터 해결해야
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">지난달 2일 개정 형사소송법이 시행된 지 한 달이 지났다. 검찰청 폐지와 수사·기소 완전 분리를 핵심으로 하는 형사사법체계 개편 이후 현장에선 크고 작은 혼란이 이어지고 있다. 70여년 만의 혁명적 변화인 만큼 일부 혼선은 불가피하다고 본다. 그러나 제도 변화 와중에 ‘사법 공백’이 발생하거나 피해자가 부담을 떠안는 상황이 계속돼선 곤란하다. 정부와 ...</p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">지난달 2일 개정 형사소송법이 시행된 지 한 달이 지났다. 검찰청 폐지와 수사·기소 완전 분리를 핵심으로 하는 형사사법체계 개편 이후 현장에선 크고 작은 혼란이 이어지고 있다. 70여년 만의 혁명적 변화인 만큼 일부 혼선은 불가피하다고 본다. 그러나 제도 변화 와중에 ‘사법 공백’이 발생하거나 피해자가 부담을 떠안는 상황이 계속돼선 곤란하다. 정부와 ...</p>
             </div>
             
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 3</span>
-                    <a href="https://www.khan.co.kr/article/202611021816001" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.khan.co.kr/article/202611021816001" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         [사설]무늬만 청년정책 양산하는 정부, 숫자보다 실효성 높이길
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">경향신문이 정부와 16개 광역지방자치단체의 올해 청년정책 1965건(총예산 32조9000억원)을 전수 분석한 결과, 청년 문제와 직접적 관련이 없거나 청년 외 다른 연령대도 다수 참여할 수 있는 사업이 489건에 달했다. 청년사업 4건 중 1건이 ‘무늬만 청년정책’인 셈으로 정부와 지자체, 정치권이 청년정책을 경쟁적으로 내놓으면서 사업 숫자만 부풀리고...</p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">경향신문이 정부와 16개 광역지방자치단체의 올해 청년정책 1965건(총예산 32조9000억원)을 전수 분석한 결과, 청년 문제와 직접적 관련이 없거나 청년 외 다른 연령대도 다수 참여할 수 있는 사업이 489건에 달했다. 청년사업 4건 중 1건이 ‘무늬만 청년정책’인 셈으로 정부와 지자체, 정치권이 청년정책을 경쟁적으로 내놓으면서 사업 숫자만 부풀리고...</p>
             </div>
             
                 </div>
             </div>
         </div>
         
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4">
-            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="theme-card bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 theme-border-subtle">
                 <div class="flex items-center gap-2">
                     <span class="px-2.5 py-1 text-xs font-bold text-white rounded-md bg-emerald-600">한국경제</span>
-                    <span class="text-sm font-bold text-gray-800">네이버 뉴스스탠드 1면 전면 기사 & 사설</span>
+                    <span class="text-sm font-bold theme-title text-gray-800">네이버 뉴스스탠드 1면 전면 기사 & 사설</span>
                 </div>
-                <a href="https://newsstand.naver.com/" target="_blank" class="text-xs text-gray-400 hover:text-blue-600">
+                <a href="https://newsstand.naver.com/" target="_blank" class="text-xs theme-subtitle text-gray-400 hover:text-blue-500">
                     뉴스스탠드 원문 ↗
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-3">
-                    <div class="text-xs font-bold text-gray-500 flex items-center gap-1.5">
+                    <div class="text-xs font-bold theme-subtitle text-gray-500 flex items-center gap-1.5">
                         <span>📰</span> 첫 화면 맨 앞면 기사 (헤드라인 · 소제목 · 주요내용)
                     </div>
                     
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="px-1.5 py-0.5 text-[10px] font-bold bg-rose-600 text-white rounded">1면 톱</span>
-                    <a href="https://www.hankyung.com/article/2026110210501" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.hankyung.com/article/2026110210501" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         [단독] "60조 수주전까지 날렸다"…K방산 '집안싸움'에 특단 조치
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">◇방진회에 갈등 조정 역할</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">[단독] "60조 수주전까지 날렸다"…K방산 '집안싸움'에 특단 조치, 방산 INSIGHT 출혈경쟁에 '사전조정제' 추진 K방산 '집안싸움' 막는다…해외 수주땐 정부가 조율 국내 입찰은 민간 자율조정 유도 해외 사업은 계약조건까지 중재 '원팀 입찰'로 해외 경쟁력 강화</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">◇방진회에 갈등 조정 역할</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">[단독] "60조 수주전까지 날렸다"…K방산 '집안싸움'에 특단 조치, 방산 INSIGHT 출혈경쟁에 '사전조정제' 추진 K방산 '집안싸움' 막는다…해외 수주땐 정부가 조율 국내 입찰은 민간 자율조정 유도 해외 사업은 계약조건까지 중재 '원팀 입찰'로 해외 경쟁력 강화</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">2</span>
-                    <a href="https://www.hankyung.com/article/202611020878g" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.hankyung.com/article/202611020878g" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         "내년 1월까지 기다릴 판"…'아이폰' 대박에도 뜻밖의 악재 [테크로그]
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">매출 두 자릿수 성장에도…순이익은 '주춤'</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">"내년 1월까지 기다릴 판"…'아이폰' 대박에도 뜻밖의 악재 [테크로그], 터너스 애플 CEO, 취임 후 첫 실적 발표 매출 11%↑ 전망…순이익 증가는 6% 그쳐 듀오 흥행하지만…화면 균열·메모리값 변수</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">매출 두 자릿수 성장에도…순이익은 '주춤'</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">"내년 1월까지 기다릴 판"…'아이폰' 대박에도 뜻밖의 악재 [테크로그], 터너스 애플 CEO, 취임 후 첫 실적 발표 매출 11%↑ 전망…순이익 증가는 6% 그쳐 듀오 흥행하지만…화면 균열·메모리값 변수</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">3</span>
-                    <a href="https://www.hankyung.com/article/202611029563i" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.hankyung.com/article/202611029563i" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         "혼자 먹여 살리긴 싫어"…30대男, 돌싱녀와 결혼 택한 이유 [유지희의 미혼앤기혼]
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">“이혼했어도 경제력 좋다면”…달라지는 배우자 조건</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">"혼자 먹여 살리긴 싫어"…30대男, 돌싱녀와 결혼 택한 이유 [유지희의 미혼앤기혼], 온리유, 재혼 희망 남녀 668명 설문…경제관 엇갈려 男 37% "독박 부양 걱정"…女 33% "기대치 이하 우려"</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">“이혼했어도 경제력 좋다면”…달라지는 배우자 조건</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">"혼자 먹여 살리긴 싫어"…30대男, 돌싱녀와 결혼 택한 이유 [유지희의 미혼앤기혼], 온리유, 재혼 희망 남녀 668명 설문…경제관 엇갈려 男 37% "독박 부양 걱정"…女 33% "기대치 이하 우려"</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">4</span>
-                    <a href="https://www.hankyung.com/article/2026110292127" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.hankyung.com/article/2026110292127" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         결혼자금 '5억' 주식에 올인했다가…"신혼집 날렸어요" 눈물
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">13년간 모은 결혼자금 주식 투자했다 60% 손실 5.4억원 중 3.2억원 증발…결혼 준비도 차질</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">결혼자금 '5억' 주식에 올인했다가…"신혼집 날렸어요" 눈물, 13년간 모은 결혼자금 주식 투자했다 60% 손실 5.4억원 중 3.2억원 증발…결혼 준비도 차질</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">13년간 모은 결혼자금 주식 투자했다 60% 손실 5.4억원 중 3.2억원 증발…결혼 준비도 차질</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">결혼자금 '5억' 주식에 올인했다가…"신혼집 날렸어요" 눈물, 13년간 모은 결혼자금 주식 투자했다 60% 손실 5.4억원 중 3.2억원 증발…결혼 준비도 차질</p>
             </div>
             
                 </div>
                 <div class="space-y-3">
-                    <div class="text-xs font-bold text-amber-700 flex items-center gap-1.5">
+                    <div class="text-xs font-bold text-amber-600 flex items-center gap-1.5">
                         <span>✍️</span> 오피니언 & 사설 핵심 요약
                     </div>
                     
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 1</span>
-                    <a href="https://www.hankyung.com/article/2026110211201" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.hankyung.com/article/2026110211201" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         [사설] 李 "담대한 재정지출"…유럽 재정위기 타산지석 삼아야
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">이재명 대통령이 내년 예산안과 관련한 국회 시정연설에서 ‘담대한 투자와 재정지출 확대’를 강조했다. K자 양극화를 극복하려면 새 성장전략이 필요하다며 역대 최대 증가율(12.8%) 예산안 편성의 당위성을 옹호했다. “모두의 성장으로 대전환하겠다”며 민생일자리, 서민금융, 주거안정의 ‘3대 민생 프로젝트’ 본격 추진도 선언했다. 불평등·양극화에 적극 대처할 때라는 판단에는 이견이 없다. 하지만 뚜렷한 경기 호전 국면에서 사상 초</p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">이재명 대통령이 내년 예산안과 관련한 국회 시정연설에서 ‘담대한 투자와 재정지출 확대’를 강조했다. K자 양극화를 극복하려면 새 성장전략이 필요하다며 역대 최대 증가율(12.8%) 예산안 편성의 당위성을 옹호했다. “모두의 성장으로 대전환하겠다”며 민생일자리, 서민금융, 주거안정의 ‘3대 민생 프로젝트’ 본격 추진도 선언했다. 불평등·양극화에 적극 대처할 때라는 판단에는 이견이 없다. 하지만 뚜렷한 경기 호전 국면에서 사상 초</p>
             </div>
             
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 2</span>
-                    <a href="https://www.hankyung.com/article/2026110211181" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.hankyung.com/article/2026110211181" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         [사설] 혁신하면 불이익, 가업승계 공제 개편 '주객전도' 아닌가
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">강화되는 가업상속 공제 요건과 대상 업종을 현행대로 유지해야 한다는 중소기업계 목소리가 이어지고 있다. 개편안대로라면 상당수 기업이 가업승계 공제 대상에서 제외되고, 급변하는 산업 환경에 대응하기도 어려워지기 때문이다. 부(富)의 대물림을 위한 ‘꼼수’는 걸러내야 하겠지만, 제도 취지까지 흔드는 정책이라면 ‘주객전도’가 아닐 수 없다. 재정경제부가 지난 8월 발표한 ‘2026년 세제 개편안’에 담긴 가업상속 공제는 대상을 현행</p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">강화되는 가업상속 공제 요건과 대상 업종을 현행대로 유지해야 한다는 중소기업계 목소리가 이어지고 있다. 개편안대로라면 상당수 기업이 가업승계 공제 대상에서 제외되고, 급변하는 산업 환경에 대응하기도 어려워지기 때문이다. 부(富)의 대물림을 위한 ‘꼼수’는 걸러내야 하겠지만, 제도 취지까지 흔드는 정책이라면 ‘주객전도’가 아닐 수 없다. 재정경제부가 지난 8월 발표한 ‘2026년 세제 개편안’에 담긴 가업상속 공제는 대상을 현행</p>
             </div>
             
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 3</span>
-                    <a href="https://www.hankyung.com/article/2026110211191" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.hankyung.com/article/2026110211191" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         [사설] 北 자폭드론 대량 생산하는데…이제야 드론 조직 개편한 軍
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">국방부가 기존 드론작전사령부를 해체하고 국방드론본부를 어제 출범시켰다. 지난 6월 발표한 ‘국방 드론·대(對)드론 발전 정책’의 후속 조치다. 드론 작전 임무는 각 군으로 이관되고, 국방드론본부는 드론·대드론 분야 전투 발전과 전력·기술 혁신, 민군 협력 기능을 총괄하게 된다. 북한의 드론 위협이 고도화하는 상황에서 드론 전력 강화는 피할 수 없는 과제다. 그러나 작전 기능이 각 군으로 쪼개지면서 드론 전력의 컨트롤타워 기능이</p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">국방부가 기존 드론작전사령부를 해체하고 국방드론본부를 어제 출범시켰다. 지난 6월 발표한 ‘국방 드론·대(對)드론 발전 정책’의 후속 조치다. 드론 작전 임무는 각 군으로 이관되고, 국방드론본부는 드론·대드론 분야 전투 발전과 전력·기술 혁신, 민군 협력 기능을 총괄하게 된다. 북한의 드론 위협이 고도화하는 상황에서 드론 전력 강화는 피할 수 없는 과제다. 그러나 작전 기능이 각 군으로 쪼개지면서 드론 전력의 컨트롤타워 기능이</p>
             </div>
             
                 </div>
             </div>
         </div>
         
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4">
-            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="theme-card bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 theme-border-subtle">
                 <div class="flex items-center gap-2">
                     <span class="px-2.5 py-1 text-xs font-bold text-white rounded-md bg-amber-600">매일경제</span>
-                    <span class="text-sm font-bold text-gray-800">네이버 뉴스스탠드 1면 전면 기사 & 사설</span>
+                    <span class="text-sm font-bold theme-title text-gray-800">네이버 뉴스스탠드 1면 전면 기사 & 사설</span>
                 </div>
-                <a href="https://newsstand.naver.com/" target="_blank" class="text-xs text-gray-400 hover:text-blue-600">
+                <a href="https://newsstand.naver.com/" target="_blank" class="text-xs theme-subtitle text-gray-400 hover:text-blue-500">
                     뉴스스탠드 원문 ↗
                 </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-3">
-                    <div class="text-xs font-bold text-gray-500 flex items-center gap-1.5">
+                    <div class="text-xs font-bold theme-subtitle text-gray-500 flex items-center gap-1.5">
                         <span>📰</span> 첫 화면 맨 앞면 기사 (헤드라인 · 소제목 · 주요내용)
                     </div>
                     
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="px-1.5 py-0.5 text-[10px] font-bold bg-rose-600 text-white rounded">1면 톱</span>
-                    <a href="https://www.mk.co.kr/news/realestate/12193760" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.mk.co.kr/news/realestate/12193760" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         3평 미사동 밭이 무려 1200만원 … 알박기에 토지보상 빨간불
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">신규택지 지정때마다 그린벨트 투기 활개 10㎡ 이하 초소형 거래 판쳐 GB 도로 지분도 손바뀜 빈번 올 김포 풍곡리 지분거래 76% 정부 이상거래 단속 강화불구 신규택지 닥공 발목잡힐 수도</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">신규택지 지정때마다 그린벨트 투기 활개10㎡ 이하 초소형 거래 판쳐GB 도로 지분도 손바뀜 빈번올 김포 풍곡리 지분거래 76%정부 이상거래 단속 강화불구신규택지 닥공 발목잡힐 수도</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">신규택지 지정때마다 그린벨트 투기 활개 10㎡ 이하 초소형 거래 판쳐 GB 도로 지분도 손바뀜 빈번 올 김포 풍곡리 지분거래 76% 정부 이상거래 단속 강화불구 신규택지 닥공 발목잡힐 수도</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">신규택지 지정때마다 그린벨트 투기 활개10㎡ 이하 초소형 거래 판쳐GB 도로 지분도 손바뀜 빈번올 김포 풍곡리 지분거래 76%정부 이상거래 단속 강화불구신규택지 닥공 발목잡힐 수도</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">2</span>
-                    <a href="https://www.mk.co.kr/news/politics/12194019" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.mk.co.kr/news/politics/12194019" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         李대통령 부부 여권번호 포함… '1호기 탑승' 168명 정보 유출
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">고위관료·경호원·주치의 등 지난 6월 유럽 순방명단 추정 靑 "사전 인지 후 대응 조치"</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">고위관료·경호원·주치의 등지난 6월 유럽 순방명단 추정靑 "사전 인지 후 대응 조치"</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">고위관료·경호원·주치의 등 지난 6월 유럽 순방명단 추정 靑 "사전 인지 후 대응 조치"</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">고위관료·경호원·주치의 등지난 6월 유럽 순방명단 추정靑 "사전 인지 후 대응 조치"</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">3</span>
-                    <a href="https://www.mk.co.kr/news/world/12193722" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.mk.co.kr/news/world/12193722" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         공화당에 등 돌린 민심 …'숨은 표'가 변수
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">美 중간선거 결전의 날 트럼프 지지층은 응답 소극적 7개 접전州서 뒷심 보일수도 민주 경선패배 후보 공화 지지 트럼프 무역협상·배당금 강조</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">美 중간선거 결전의 날트럼프 지지층은 응답 소극적7개 접전州서 뒷심 보일수도민주 경선패배 후보 공화 지지트럼프 무역협상·배당금 강조</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">美 중간선거 결전의 날 트럼프 지지층은 응답 소극적 7개 접전州서 뒷심 보일수도 민주 경선패배 후보 공화 지지 트럼프 무역협상·배당금 강조</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">美 중간선거 결전의 날트럼프 지지층은 응답 소극적7개 접전州서 뒷심 보일수도민주 경선패배 후보 공화 지지트럼프 무역협상·배당금 강조</p>
             </div>
             
-            <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
+            <div class="p-3 theme-news-row bg-slate-50 rounded-xl hover:opacity-90 transition space-y-1 border border-transparent">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">4</span>
-                    <a href="https://www.mk.co.kr/news/economy/12193791" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                    <a href="https://www.mk.co.kr/news/economy/12193791" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-blue-500 hover:underline">
                         성장 36차례 외친 李 …"162조 미래기금 4대분야에 집중 투입"
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">821조 슈퍼예산 쟁점은 "모두의 성장으로 양극화 해소" 3대 민생프로젝트 해결 의지 미래기금 수익률 확보는 과제 지방교부세 개편해 30조 줄여 정부 의존도 높아질 우려 나와 교육재정 변경도 현장선 반발</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">821조 슈퍼예산 쟁점은"모두의 성장으로 양극화 해소"3대 민생프로젝트 해결 의지미래기금 수익률 확보는 과제지방교부세 개편해 30조 줄여정부 의존도 높아질 우려 나와교육재정 변경도 현장선 반발</p>
+                <div class="text-xs text-indigo-500 font-medium mt-0.5">821조 슈퍼예산 쟁점은 "모두의 성장으로 양극화 해소" 3대 민생프로젝트 해결 의지 미래기금 수익률 확보는 과제 지방교부세 개편해 30조 줄여 정부 의존도 높아질 우려 나와 교육재정 변경도 현장선 반발</div>
+                <p class="text-xs theme-content text-gray-600 leading-relaxed pl-5">821조 슈퍼예산 쟁점은"모두의 성장으로 양극화 해소"3대 민생프로젝트 해결 의지미래기금 수익률 확보는 과제지방교부세 개편해 30조 줄여정부 의존도 높아질 우려 나와교육재정 변경도 현장선 반발</p>
             </div>
             
                 </div>
                 <div class="space-y-3">
-                    <div class="text-xs font-bold text-amber-700 flex items-center gap-1.5">
+                    <div class="text-xs font-bold text-amber-600 flex items-center gap-1.5">
                         <span>✍️</span> 오피니언 & 사설 핵심 요약
                     </div>
                     
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 1</span>
-                    <a href="https://www.mk.co.kr/news/editorial/12193763" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.mk.co.kr/news/editorial/12193763" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         언론 향한 부정적 인식을 경계한다 [사설]
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">언론 자유에 대한 정치권의 인식이 위험 수위를 넘나들고 있다. 언론과 권력의 관계를 어떻게 설정하느냐는 한 나라 민주주의 성숙도를 가늠하는 척도다. 미국은 수정헌법 제1조로 연방의회가 언론의 자유를 제한하는 법률을 만들지 못하도록 했고, 사법부는 이를 근거로 표현의 자유를 특별히 두텁게 보호하는 판례를 쌓아 왔다. 선진국들이 권력의 개입은 막고 공론장의 기반은 지키려 애써 온 것도 같은 맥락이다. 그런데 정치권은 권력을 잡는 </p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">언론 자유에 대한 정치권의 인식이 위험 수위를 넘나들고 있다. 언론과 권력의 관계를 어떻게 설정하느냐는 한 나라 민주주의 성숙도를 가늠하는 척도다. 미국은 수정헌법 제1조로 연방의회가 언론의 자유를 제한하는 법률을 만들지 못하도록 했고, 사법부는 이를 근거로 표현의 자유를 특별히 두텁게 보호하는 판례를 쌓아 왔다. 선진국들이 권력의 개입은 막고 공론장의 기반은 지키려 애써 온 것도 같은 맥락이다. 그런데 정치권은 권력을 잡는 </p>
             </div>
             
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 2</span>
-                    <a href="https://www.mk.co.kr/news/editorial/12193764" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.mk.co.kr/news/editorial/12193764" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         확장재정 시정연설 …'2029년부터 추가세수 단절' 대비해야 [사설]
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">이재명 대통령이 2일 국회 시정연설에서 내년도 예산안을 설명하며 성장을 36차례 언급했다. 하지만 "주요 내용을 구체적으로 설명드리겠다"면서 맨 먼저 꺼낸 건 복지와 소상공인 지원이었다. 신청하지 않아도 받는 자동 복지급여, 복지 대상자 선정 기준이 되는 중위소득의 역대 최대 인상, 소상공인 장기연체채무 특별조정과 지역사랑상품권 25조6000억원 발행 등이었다. 대통령은 내년 예산을 소수의 성장에서 모두의 성장으로 전환하기 위</p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">이재명 대통령이 2일 국회 시정연설에서 내년도 예산안을 설명하며 성장을 36차례 언급했다. 하지만 "주요 내용을 구체적으로 설명드리겠다"면서 맨 먼저 꺼낸 건 복지와 소상공인 지원이었다. 신청하지 않아도 받는 자동 복지급여, 복지 대상자 선정 기준이 되는 중위소득의 역대 최대 인상, 소상공인 장기연체채무 특별조정과 지역사랑상품권 25조6000억원 발행 등이었다. 대통령은 내년 예산을 소수의 성장에서 모두의 성장으로 전환하기 위</p>
             </div>
             
-            <div class="p-3 bg-amber-50/50 rounded-xl border border-amber-100 hover:bg-amber-50 transition space-y-1">
+            <div class="p-3 theme-opinion-row bg-amber-50/50 rounded-xl border border-amber-100 hover:opacity-90 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-amber-600">사설 3</span>
-                    <a href="https://www.mk.co.kr/news/editorial/12193762" target="_blank" class="text-sm font-bold text-gray-900 hover:text-amber-700 hover:underline">
+                    <a href="https://www.mk.co.kr/news/editorial/12193762" target="_blank" class="text-sm font-bold theme-title text-gray-900 hover:text-amber-600 hover:underline">
                         '노도강'도 월세 300만원 … 갈수록 팍팍해지는 서울살이 [사설]
                     </a>
                 </div>
-                <p class="text-xs text-gray-700 leading-relaxed pl-4">서울 외곽 지역에서도 아파트 월세 300만원 시대가 열렸다. 노원·도봉·강북(노도강), 금천·관악·구로(금관구) 등 에서도 국민 평형(전용 84㎡) 아파트 월세가 300만원을 넘는 사례가 잇따르고 있다. 서울 아파트 임대차 거래에서 월세 비중이 절반을 넘어선 가운데 외곽 지역마저 임대료가 치솟으면서 서울 거주 서민들의 삶은 갈수록 팍팍해지고 있다. 국토교통부에 따르면 올해 들어 11월 1일까지 노도강·금관구 6개구에서 월세 3</p>
+                <p class="text-xs theme-opinion-text text-gray-700 leading-relaxed pl-4">서울 외곽 지역에서도 아파트 월세 300만원 시대가 열렸다. 노원·도봉·강북(노도강), 금천·관악·구로(금관구) 등 에서도 국민 평형(전용 84㎡) 아파트 월세가 300만원을 넘는 사례가 잇따르고 있다. 서울 아파트 임대차 거래에서 월세 비중이 절반을 넘어선 가운데 외곽 지역마저 임대료가 치솟으면서 서울 거주 서민들의 삶은 갈수록 팍팍해지고 있다. 국토교통부에 따르면 올해 들어 11월 1일까지 노도강·금관구 6개구에서 월세 3</p>
             </div>
             
                 </div>
@@ -558,7 +753,7 @@
         
         </section>
 
-        <footer class="text-center text-xs text-gray-400 py-6 space-y-2">
+        <footer class="text-center text-xs theme-subtitle text-gray-400 py-6 space-y-2">
             <div>aiworks/schedule • 매일 아침 06:00 자동 갱신</div>
             <div>
                 공유 링크: <a href="https://tr.ee/Z51VtU" target="_blank" class="text-blue-500 hover:underline font-medium">https://tr.ee/Z51VtU</a>
@@ -566,9 +761,37 @@
         </footer>
     </div>
 
-    <!-- 공유 및 복사 자바스크립트 (단축링크 전용 - 로컬/웹 어느 환경에서도 원본 주소 절대 노출 안 됨) -->
+    <!-- 공유 및 테마 자바스크립트 -->
     <script>
     const MASKED_SHARE_URL = "https://tr.ee/Z51VtU";
+
+    function setTheme(mode) {
+        if (!['light', 'gray', 'dark'].includes(mode)) mode = 'light';
+        document.documentElement.setAttribute('data-theme', mode);
+        document.body.setAttribute('data-theme', mode);
+        try {
+            localStorage.setItem('briefing_theme_mode', mode);
+        } catch(e) {}
+
+        ['light', 'gray', 'dark'].forEach(function(m) {
+            var btn = document.getElementById('btn-theme-' + m);
+            if (btn) {
+                if (m === mode) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    (function() {
+        var saved = 'light';
+        try {
+            saved = localStorage.getItem('briefing_theme_mode') || 'light';
+        } catch(e) {}
+        setTheme(saved);
+    })();
 
     function copyLink() {
         if (navigator.clipboard && window.isSecureContext) {
