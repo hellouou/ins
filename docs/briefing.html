@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>경제·증시 & 네이버 뉴스스탠드 3대 언론사 심층 브리핑</title>
+    <!-- OpenGraph 메타 태그 (카카오톡, 문자 공유 시 예쁜 카드 미리보기 제공) -->
+    <meta property="og:title" content="📊 일일 경제·증시 & 신문 1면 모닝 브리핑">
+    <meta property="og:description" content="미국 나스닥 지수가 1% 이상 하락하며 기술주 중심의 차익 실현 및 경계 심리가 부각되었습니다. 원/달러 환율은 1,342.23원 수준을 기록하고 있습니다.">
+    <meta property="og:url" content="https://hellouou.github.io/ins/briefing.html">
+    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretendard/1.3.9/static/pretendard.min.css">
     <style>body { font-family: 'Pretendard', sans-serif; }</style>
@@ -17,14 +22,18 @@
                     <span class="text-2xl">📈</span>
                     <h1 class="text-2xl font-bold text-gray-900">경제·증시 & 언론사 1면 심층 브리핑</h1>
                 </div>
-                <p class="text-xs text-gray-500 mt-1">기준 시각: 2026-11-02 07:30 KST | 출처: 네이버 뉴스스탠드 (경향 · 한경 · 매경 1면 맨 앞면)</p>
+                <p class="text-xs text-gray-500 mt-1">기준 시각: 2026-11-02 14:25 KST | 출처: 네이버 뉴스스탠드 (경향 · 한경 · 매경 1면)</p>
             </div>
-            <div class="flex gap-2">
-                <a href="./latest_briefing.md" target="_blank" class="px-4 py-2 text-xs font-semibold bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition">
-                    마크다운 리포트 보기
-                </a>
-                <a href="./history.csv" download class="px-4 py-2 text-xs font-semibold bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
-                    CSV 다운로드
+            <!-- 공유 & 다운로드 버튼군 -->
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="shareLink()" class="px-3.5 py-2 text-xs font-bold bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition flex items-center gap-1.5 shadow-sm active:scale-95">
+                    <span>💬</span> <span>공유하기</span>
+                </button>
+                <button onclick="copyLink()" class="px-3.5 py-2 text-xs font-semibold bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition flex items-center gap-1.5 border border-gray-200 active:scale-95">
+                    <span>🔗</span> <span>링크 복사</span>
+                </button>
+                <a href="./latest_briefing.md" target="_blank" class="px-3.5 py-2 text-xs font-semibold bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition">
+                    마크다운 보기
                 </a>
             </div>
         </header>
@@ -32,7 +41,7 @@
         <!-- Summary Banner -->
         <div class="bg-gradient-to-r from-slate-900 via-indigo-900 to-blue-900 text-white rounded-2xl p-6 shadow-md">
             <div class="text-xs font-bold uppercase tracking-wider text-blue-300 mb-1">Morning Market Insight</div>
-            <p class="text-base sm:text-lg font-medium leading-relaxed">미국 나스닥 지수가 1% 이상 하락하며 기술주 중심의 차익 실현 및 경계 심리가 부각되었습니다. 원/달러 환율은 1,333.81원 수준을 기록하고 있습니다. 국제 유가(WTI)가 +4.22% 급등세를 보였습니다.</p>
+            <p class="text-base sm:text-lg font-medium leading-relaxed">미국 나스닥 지수가 1% 이상 하락하며 기술주 중심의 차익 실현 및 경계 심리가 부각되었습니다. 원/달러 환율은 1,342.23원 수준을 기록하고 있습니다.</p>
         </div>
 
         <!-- Global Market -->
@@ -120,31 +129,31 @@
             <div class="flex justify-between items-center mb-1">
                 <span class="text-xs font-semibold text-gray-400">^KS11</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
-                    ▲ +3.25%
+                    ▲ +7.54%
                 </span>
             </div>
             <div class="text-sm font-medium text-gray-700">코스피</div>
             <div class="text-xl font-bold text-gray-900 mt-1">
-                5,730.74 <span class="text-xs font-normal text-gray-500">pt</span>
+                5,881.70 <span class="text-xs font-normal text-gray-500">pt</span>
             </div>
             <div class="text-xs text-gray-400 mt-1">
-                전일비 +180.44
+                전일비 +412.23
             </div>
         </div>
         
         <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
                 <span class="text-xs font-semibold text-gray-400">^KQ11</span>
-                <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -3.63%
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
+                    ▲ +0.94%
                 </span>
             </div>
             <div class="text-sm font-medium text-gray-700">코스닥</div>
             <div class="text-xl font-bold text-gray-900 mt-1">
-                724.38 <span class="text-xs font-normal text-gray-500">pt</span>
+                734.01 <span class="text-xs font-normal text-gray-500">pt</span>
             </div>
             <div class="text-xs text-gray-400 mt-1">
-                전일비 -27.31
+                전일비 +6.80
             </div>
         </div>
         
@@ -162,31 +171,31 @@
             <div class="flex justify-between items-center mb-1">
                 <span class="text-xs font-semibold text-gray-400">KRW=X</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
-                    ▲ +0.91%
+                    ▲ +1.32%
                 </span>
             </div>
             <div class="text-sm font-medium text-gray-700">원/달러 환율</div>
             <div class="text-xl font-bold text-gray-900 mt-1">
-                1,333.81 <span class="text-xs font-normal text-gray-500">원</span>
+                1,342.23 <span class="text-xs font-normal text-gray-500">원</span>
             </div>
             <div class="text-xs text-gray-400 mt-1">
-                전일비 +12.05
+                전일비 +17.46
             </div>
         </div>
         
         <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
                 <span class="text-xs font-semibold text-gray-400">CL=F</span>
-                <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
-                    ▲ +4.22%
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
+                    ▼ -2.20%
                 </span>
             </div>
             <div class="text-sm font-medium text-gray-700">WTI 국제유가</div>
             <div class="text-xl font-bold text-gray-900 mt-1">
-                104.12 <span class="text-xs font-normal text-gray-500">달러</span>
+                100.52 <span class="text-xs font-normal text-gray-500">달러</span>
             </div>
             <div class="text-xs text-gray-400 mt-1">
-                전일비 +4.22
+                전일비 -2.26
             </div>
         </div>
         
@@ -194,15 +203,15 @@
             <div class="flex justify-between items-center mb-1">
                 <span class="text-xs font-semibold text-gray-400">GC=F</span>
                 <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -4.31%
+                    ▼ -3.36%
                 </span>
             </div>
             <div class="text-sm font-medium text-gray-700">금 선물</div>
             <div class="text-xl font-bold text-gray-900 mt-1">
-                3,898.90 <span class="text-xs font-normal text-gray-500">달러</span>
+                3,915.30 <span class="text-xs font-normal text-gray-500">달러</span>
             </div>
             <div class="text-xs text-gray-400 mt-1">
-                전일비 -175.70
+                전일비 -136.30
             </div>
         </div>
         
@@ -225,16 +234,16 @@
         <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition">
             <div class="flex justify-between items-center mb-1">
                 <span class="text-xs font-semibold text-gray-400">BTC-USD</span>
-                <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-blue-600 bg-blue-50 border-blue-200">
-                    ▼ -4.55%
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full border text-rose-600 bg-rose-50 border-rose-200">
+                    ▲ +0.61%
                 </span>
             </div>
             <div class="text-sm font-medium text-gray-700">비트코인</div>
             <div class="text-xl font-bold text-gray-900 mt-1">
-                77,571.33 <span class="text-xs font-normal text-gray-500">달러</span>
+                78,252.99 <span class="text-xs font-normal text-gray-500">달러</span>
             </div>
             <div class="text-xs text-gray-400 mt-1">
-                전일비 -3,696.26
+                전일비 +477.88
             </div>
         </div>
         
@@ -266,45 +275,45 @@
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="px-1.5 py-0.5 text-[10px] font-bold bg-rose-600 text-white rounded">1면 톱</span>
-                    <a href="https://www.khan.co.kr/article/202611020600121/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        [개정 형소법 한달]추미애는 보내고, 한동훈은 묵히고···중수청은 왜 한 달째 사건 뒤적이나
+                    <a href="https://www.khan.co.kr/article/202611021017001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        [속보]이 대통령 “30년 만에 IMF 졸업···K자 성장 극복은 새 성장 공식으로”
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">점선면</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">정부·여당이 주도한 검찰개혁 상징인 중대범죄수사청(중수청)이 오는 2일로 출범 한달을 맞이하지만 ‘1호 수사’라고 할 만한 대형 사건 수사에 착수하지 못했다. 중수청이 과거 검찰(현 공소청)의 수사력을 대체할 기관이라는 점을 입증하기 위해선 권력형 부패범죄와 대규모 금융범죄 등에서 성과를 내야 한다. 그러나 출범 한 달째 사건을 고르며 뒤적이는 모습에 ‘사건 쇼핑’이라는 비판이 나온다. 서울중수청 반부패수사국은 지난달 16일 한동훈 무소속 의원의 딸 ‘허위 스펙’ 수사 무마 의혹 사건을 배당받아 ...</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">“나라 경제 좋아졌는데 국민 살림은 팍팍</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">이재명 대통령은 2일 “불평등과 양극화가 심화되는 ‘K자 성장’의 한계를 극복하려면 성장이냐 분배냐 하는 낡은 이분법적 논쟁에서 벗어나 달라진 시대와 상황에 맞는 새로운 성장 공식을 적용해야 한다”고 밝혔다. 이 대통령은 이날 국회에서 내년도 예산안 시정연설을 하면서 “1998년 외환위기 때 투입한 공적자금도 내년이면 모두 상환한다. 2003년부터 25년에 걸쳐 97조2000억원을 갚아 30년 만에 IMF 위기 극복을 완료하게 되는 것”이라며 이같이 말했다.</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">2</span>
-                    <a href="https://www.khan.co.kr/article/202611020600141/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        [춘추정병시대] 테니스장 신축이 청년 정책? 33조 쏟아부어도 실업률 제자리인 이유
+                    <a href="https://www.khan.co.kr/article/202611021114001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        [속보]육군 “강원도 철원 소재 전방 부대서 하사 1명 외상입고 사망”···사고 경위 조사 중
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">⑤전지적 정부 시점 - 청년 정책 1965건 전수 분석</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">청년정책과, 청년고용기획과, 청년농육성정책팀, 청년주거정책과… 요즘은 조직도에 ‘청년’이 없는 중앙부처를 찾기가 더 힘들다. 지방자치단체도 마찬가지다. 2020년 청년기본법 제정 이래 각급 정부는 청년 문제를 다루는 과·팀을 만들었다. 이 조직들은 국정과제가 된 청년 문제 해결을 위해 청년 정책을 앞다퉈 생산하고 있다.</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">점선면</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">육군이 2일 오전 7시쯤 강원도 철원 소재 전방 부대에서 하사 1명이 외상을 입고 사망했다고 밝혔다. 육군은 “현재 군과 민간 수사기관은 정확한 사고 원인과 경위를 조사 중”이라고 밝혔다.</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">3</span>
-                    <a href="https://www.khan.co.kr/article/202611011750001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        ‘22년 부부연기’ 김혜자·‘60년지기’ 오지명·‘딸 같은’ 김혜수…최불암 빈소 찾은 별들
+                    <a href="https://www.khan.co.kr/article/202611021212001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        길 막는 ‘도심 마라톤’ 비판에···오세훈 “시민 불편 무겁게 받아들여···코스·일정 원점 협의”
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">“따뜻했던 큰 어른”…빈소 마지막 날도 애도 물결</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">‘국민 아버지’로 사랑받은 배우 최불암(본명 최영한)이 지난달 29일 향년 87세로 세상을 떠났다. 정의로운 ‘수사반장’부터 인자하면서도 엄격한 ‘양촌리 김 회장’까지, 안방극장에서 한 시대를 함께한 국민 배우의 별세에 각계의 추모와 애도가 이어졌다. 별세 소식이 전해진 지난달 30일부터 1일까지 서울 송파구 서울아산병원에 마련된 빈소를 찾은 동료·후배 배우들과 정·관계 인사들은 ‘아버지이자 스승’ 같았던 선배이자 ‘따뜻하고 편안한’ 동료였던 고인을 추억했다.</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">서울 시내버스 대규모 노선 우회 운행</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">주말마다 도심 도로를 통제하고 열리는 마라톤 대회에 대한 비판이 잇따르자 오세훈 서울시장이 “내년 대회는 코스와 일정을 원점에서 다시 협의하겠다”고 밝혔다. 오 시장은 2일 페이스북을 통해 “어제 마라톤 대회로 광화문에서 올림픽공원까지, 상암에서 여의도까지 서울 시내 주요 도로가 대규모로 막혔다”며 “소중한 주말 아침 시민들께서 겪으셨을 답답함과 불편함을 무겁게 받아들인다”고 말했다.</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">4</span>
-                    <a href="https://www.khan.co.kr/article/202611020600081/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        [단독]“미 기업 차별” 공정위 저격한 싱크탱크 후원 명단에 쿠팡
+                    <a href="https://www.khan.co.kr/article/202611021406001/?nv=stand&utm_source=naver&utm_medium=portal_news&utm_content=&utm_campaign=newsstand" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        ISIS 추종자 또 있었다…경찰, FBI 첩보로 무장단체 가입시도 20대 송치
                     </a>
                 </div>
                 <div class="text-xs text-indigo-600 font-medium mt-0.5">점선면</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">공정거래위원회가 미국 정보기술(IT) 기업을 차별해 과도한 과징금을 부과한다고 주장한 미국 유력 싱크탱크에 쿠팡이 1만달러(약 1330만원) 넘게 후원한 것으로 드러났다. 미 정보기술혁신재단(ITIF)가 홈페이지에 공개한 ‘1만달러 이상 후원자’ 명단을 보면, 글로벌 기업·기관 64곳 중 쿠팡이 포함되어 있는 것으로 1일 확인됐다.</p>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">이슬람 극단주의 무장단체 이슬람국가(ISIS)에 충성을 맹세하고 가입하려 한 20대가 미국 연방수사국(FBI) 첩보로 경찰에 덜미를 잡혔다. 충북경찰청은 국민보호와 공공안전을 위한 테러방지법 위반(외국인전투원 가입 예비) 혐의로 20대 A씨를 구속 송치했다고 2일 밝혔다.</p>
             </div>
             
                 </div>
@@ -366,45 +375,45 @@
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="px-1.5 py-0.5 text-[10px] font-bold bg-rose-600 text-white rounded">1면 톱</span>
-                    <a href="https://www.hankyung.com/article/2026110185611" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        [단독] "현대차에선 처음 있는 일"…티맵 '24년 독주' 깨지나
+                    <a href="https://www.hankyung.com/article/2026103052546" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        "한강뷰가 임대주택뷰 될 판"…정부 발표에 발칵 뒤집힌 동네 [시장톡]
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">1위 티맵 아직 진출 안한 틈타 경쟁사들 앱 고도화하며 각축전 네이버지도 이용자 매년 급증…현대차, 주행데이터 등 확보 포석</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">현대자동차·기아 차량에 네이버지도와 카카오내비를 깔 수 있게 됐다. 현대차그룹이 신차에 새로운 인포테인먼트 시스템인 ‘플레오스 커넥트’를 도입한 결과다. 이를 계기로 국내 내비게이션 시장이 들썩이고 있다. 1일 업계에 따르면 현대차그룹의 플레오스 커넥트 앱마켓에 최근 네이버지도, 카카오내비, 왓쓰리워즈 등 내비게이션 앱 3종이 입점했다. 현대차·기아 차주는 현대오토에버의 기본 내비게이션이 아니더라도 스마트폰처럼 원하는 앱을 설치해 순정 내비게이션과 같이 이용할 수 있다. 국내 내비게이션 시장 1위</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">미사 1만2000·감일 6500가구 신규택지 후보지 발표 교통·녹지 변화 우려…"공급 효과는 장기적으로 봐야"</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">"한강뷰가 임대주택뷰 될 판"…정부 발표에 발칵 뒤집힌 동네 [시장톡], 미사 1만2000·감일 6500가구 신규택지 후보지 발표 교통·녹지 변화 우려…"공급 효과는 장기적으로 봐야"</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">2</span>
-                    <a href="https://www.hankyung.com/article/2026110187127" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        "중국산 믿기 힘들어요"…호주에서 인기 폭발한 한국 음식
+                    <a href="https://www.hankyung.com/article/202611029563i" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        "혼자 먹여 살리긴 싫어"…30대男, 돌싱녀와 결혼 택한 이유 [유지희의 미혼앤기혼]
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">한국산 김, 호주서 '건강간식' 인기 호주 대형 유통망도 김 판매 확대 중국산 품질 논란에 한국산 찾아</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">"중국산 믿기 힘들어요"…호주에서 인기 폭발한 한국 음식, 한국산 김, 호주서 '건강간식' 인기 호주 대형 유통망도 김 판매 확대 중국산 품질 논란에 한국산 찾아</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">“이혼했어도 경제력 좋다면”…달라지는 배우자 조건</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">"혼자 먹여 살리긴 싫어"…30대男, 돌싱녀와 결혼 택한 이유 [유지희의 미혼앤기혼], 온리유、재혼 희망 남녀 668명 설문…경제관 엇갈려 男 37% "독박 부양 걱정"…女 33% "기대치 이하 우려"</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">3</span>
-                    <a href="https://www.hankyung.com/article/2026102937186" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        드디어 GTX 뚫리나…"서울역 10분 만에 간다" 들썩이는 동네 [철길옆집]
+                    <a href="https://www.hankyung.com/article/2026110292127" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        결혼자금 '5억' 주식에 올인했다가…"신혼집 날렸어요" 눈물
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">GTX-B 착공…127년 된 부평역, 서울 접근성 달라진다</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">드디어 GTX 뚫리나…"서울역 10분 만에 간다" 들썩이는 동네 [철길옆집], "GTX 타면 서울역까지 10분대"…인천 부평역 다시 뜨나 GTX-B 공사 본격화…복합환승센터 조성도 추진 신축 매물 늘며 주춤, 구축 재건축 기대 가격 상승</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">13년간 모은 결혼자금 주식 투자했다 60% 손실 5.4억원 중 3.2억원 증발…결혼 준비도 차질</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">결혼자금 '5억' 주식에 올인했다가…"신혼집 날렸어요" 눈물, 13년간 모은 결혼자금 주식 투자했다 60% 손실 5.4억원 중 3.2억원 증발…결혼 준비도 차질</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">4</span>
-                    <a href="https://www.hankyung.com/article/2026110186131" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        국민연금 막상 받아보니…'月 60만원으로 어떻게 사나' 한숨
+                    <a href="https://www.hankyung.com/article/202611028996g" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        LVMH 회장 아들이 '이곳' 찾은 이유…30년 인연 재조명
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">국민연금 받는 사람 10명 중 7명 '월 60만원 미만' 전체 수급자 800만명 돌파 2030년 1000만명 넘을 듯</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">국민연금 막상 받아보니…'月 60만원으로 어떻게 사나' 한숨, 국민연금 받는 사람 10명 중 7명 '월 60만원 미만' 전체 수급자 800만명 돌파 2030년 1000만명 넘을 듯</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">1996년 루이비통 입점…여성·남성 매장 분리로 확장</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">LVMH 회장 아들이 '이곳' 찾은 이유…30년 인연 재조명 , 프레데릭 아르노·김동선, 로로피아나 매장·트리 점검 1996년 루이비통 입점부터 매장 개편·한정판 행사로 협력</p>
             </div>
             
                 </div>
@@ -466,45 +475,45 @@
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="px-1.5 py-0.5 text-[10px] font-bold bg-rose-600 text-white rounded">1면 톱</span>
-                    <a href="https://www.mk.co.kr/news/economy/12193047" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        “주식만 믿었다간 벼락거지 못면한다”…한달새 50조 몰린 이 상품
+                    <a href="https://www.mk.co.kr/news/it/12193285" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        “아내한테 숨긴 비밀, 챗GPT에 털어놨는데”…지우기 힘든 기록으로 ‘박제’
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">5대은행 예적금 외 수신액 4년여만에 월 최대폭 증가</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">5대은행 예적금 외 수신액 4년여만에 월 최대폭 증가</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">대화 삭제해도 서버·백업에 남아 부적절한 내용 판단 땐 최대 7년 “새로운 보안 위협…대응 필요”</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">대화 삭제해도 서버·백업에 남아 부적절한 내용 판단 땐 최대 7년 “새로운 보안 위협…대응 필요”</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">2</span>
-                    <a href="https://www.mk.co.kr/news/economy/12193048" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        수출 1조시대, 알고보니 49%가 반도체…삐끗하면 나라 흔들린다
+                    <a href="https://www.mk.co.kr/news/politics/12193197" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        [속보] 이 대통령 “불평등 양극화 그늘 여전 …‘모두의 성장’ 대전환”
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">산업부, 10월 수출입동향 62년만에 수출 1만배 커져 美·中·獨 이어 1조달러 눈앞 대기업 편중·美 견제는 숙제</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">산업부, 10월 수출입동향 62년만에 수출 1만배 커져 美·中·獨 이어 1조달러 눈앞 대기업 편중·美 견제는 숙제</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">이재명 대통령이 2일 경제 회복의 성과를 국민 개개인의 삶으로 확산하기 위한 ‘모두의 성장’으로의 전환을 강조했다. 내년도 예산안은 올해보다 12.8% 늘어난 820조9000억원 규모로, 미래 성장동력 확보와 양극화 해소에 재정을 집중하겠다는 구상이다</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">이재명 대통령이 2일 경제 회복의 성과를 국민 개개인의 삶으로 확산하기 위한 ‘모두의 성장’으로의 전환을 강조했다. 내년도 예산안은 올해보다 12.8% 늘어난 820조9000억원 규모로, 미래 성장동력 확보와 양극화 해소에 재정을 집중하겠다는 구상이다. 이 대통령은 이날 국회 예산안 시정연설에서 “나라 경제는 좋아졌는데 내 삶이 나아지지 못하면 무슨 소용이</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">3</span>
-                    <a href="https://www.mk.co.kr/news/stock/12192995" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        이젠 6000선조차 버겁네…지난달에만 16% 급락한 코스피, 이번주 향방은
+                    <a href="https://www.mk.co.kr/news/business/12193413" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        “지난달에도 비쌌는데 또?”…유류할증료 석 달째 상승, 항공업계는 지금
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">미국 중간선거와 AI 기업 실적에 주목 대신證 “이번주 5700~6500선” 제시</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">미국 중간선거와 AI 기업 실적에 주목 대신證 “이번주 5700~6500선” 제시</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">중동 정세 불안정 등의 영향으로 항공유 가격이 오르면서 국제선 항공권에 붙는 유류할증료도 3개월 연속 상승했다. 항공사들은 늘어난 연료비를 운임에 일부 반영하면서도, 항공권 가격이 높아져 이에 부담을 느낀 여행객들의 수요가 위축될 가능성을 고려하는 분</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">중동 정세 불안정 등의 영향으로 항공유 가격이 오르면서 국제선 항공권에 붙는 유류할증료도 3개월 연속 상승했다. 항공사들은 늘어난 연료비를 운임에 일부 반영하면서도, 항공권 가격이 높아져 이에 부담을 느낀 여행객들의 수요가 위축될 가능성을 고려하는 분위기다. 2일 항공업계에 따르면 대한항공은 이달 발권하는 국제선 항공권에 유류할증료 33단계 중 27단계를</p>
             </div>
             
             <div class="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition space-y-1">
                 <div class="flex items-start gap-2">
                     <span class="text-xs font-bold text-gray-400">4</span>
-                    <a href="https://www.mk.co.kr/news/economy/12192943" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
-                        [단독] 1년간 묶였던 공공자산 매각 재시동
+                    <a href="https://www.mk.co.kr/news/politics/12193257" target="_blank" class="text-sm font-bold text-gray-900 hover:text-blue-600 hover:underline">
+                        [속보] 특검, 중앙선관위 위원장실 등 압수수색…국고손실 등 혐의
                     </a>
                 </div>
-                <div class="text-xs text-indigo-600 font-medium mt-0.5">정부 '총리 사전 재가' 전격 해제 헐값 매각 논란에…李, 작년 11월 자산매각 중단 지시 200조 빚더미 한전, 해외 발전사업 지분 매각 재검토</div>
-                <p class="text-xs text-gray-600 leading-relaxed pl-5">정부 '총리 사전 재가' 전격 해제헐값 매각 논란에…李, 작년 11월 자산매각 중단 지시200조 빚더미 한전, 해외 발전사업 지분 매각 재검토</p>
+                <div class="text-xs text-indigo-600 font-medium mt-0.5">6·3 지방선거 투표용지 부족 사태 등을 수사하는 이태한 선거관리위원회 특별검사팀이 선관위의 수당 부당 지급 의혹과 관련해 강제수사에 착수했다. 특검팀은 2일 오전 9시부터 특정범죄가중처벌법상 국고 등 손실, 직권남용 권리행사 방해, 허위공문서작성 등</div>
+                <p class="text-xs text-gray-600 leading-relaxed pl-5">6·3 지방선거 투표용지 부족 사태 등을 수사하는 이태한 선거관리위원회 특별검사팀이 선관위의 수당 부당 지급 의혹과 관련해 강제수사에 착수했다. 특검팀은 2일 오전 9시부터 특정범죄가중처벌법상 국고 등 손실, 직권남용 권리행사 방해, 허위공문서작성 등 혐의로 중앙선관위 위원장실과 사무총장실 등 18개 부서에 대한 압수수색을 진행하고 있다고 밝혔다. 압수수색</p>
             </div>
             
                 </div>
@@ -549,9 +558,40 @@
         
         </section>
 
-        <footer class="text-center text-xs text-gray-400 py-6">
-            aiworks/schedule • 매일 아침 07:30 자동 갱신
+        <footer class="text-center text-xs text-gray-400 py-6 space-y-2">
+            <div>aiworks/schedule • 매일 아침 07:30 자동 갱신</div>
+            <div>
+                공유 링크: <a href="https://hellouou.github.io/ins/briefing.html" class="text-blue-500 hover:underline">https://hellouou.github.io/ins/briefing.html</a>
+            </div>
         </footer>
     </div>
+
+    <!-- 공유 및 복사 자바스크립트 -->
+    <script>
+    const SHARE_URL = "https://hellouou.github.io/ins/briefing.html";
+    function copyLink() {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(SHARE_URL).then(() => {
+                alert("📋 브리핑 링크가 복사되었습니다!\n" + SHARE_URL + "\n\n카카오톡이나 문자로 지인에게 공유해보세요.");
+            }).catch(() => fallbackPrompt());
+        } else {
+            fallbackPrompt();
+        }
+    }
+    function fallbackPrompt() {
+        prompt("아래 링크를 길게 눌러 복사하세요:", SHARE_URL);
+    }
+    function shareLink() {
+        if (navigator.share) {
+            navigator.share({
+                title: "일일 경제·증시 & 신문 1면 브리핑",
+                text: "오늘자 경제 지표와 경향·한경·매경 1면 톱기사 모닝 브리핑입니다.",
+                url: SHARE_URL
+            }).catch(() => {});
+        } else {
+            copyLink();
+        }
+    }
+    </script>
 </body>
 </html>
