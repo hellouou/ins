@@ -2190,8 +2190,8 @@ function initThemeMode() {
 // ======================================================================
 
 function copyShareLink() {
-    // [공식 단축 공유 링크] 깃허브 원본 주소를 비노출하고 bit.ly 단축 링크로 고정 복사
-    const shareUrl = 'https://bit.ly/insutop';
+    // [공식 단축 공유 링크] 깃허브 원본 주소를 비노출하고 공식 단축 링크(tr.ee/zdroB2)로 고정 복사
+    const shareUrl = 'https://tr.ee/zdroB2';
 
     function performCopy(text) {
         if (navigator.clipboard && window.isSecureContext) {
